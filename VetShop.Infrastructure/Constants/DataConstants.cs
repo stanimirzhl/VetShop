@@ -24,7 +24,15 @@ namespace VetShop.Infrastructure.Constants
             public const int MinCommentDescription = 5;
             public const int MaxCommentDescription = 250;
         }
-        public static class Category
+        public static class ProductConstants
+        {
+            public const int MinProductTitle = 25;
+            public const int MaxProductTitle = 100;
+
+            public const int MinProductDescription = 100;
+            public const int MaxProductDescription = 2000;
+        }
+        public static class CategoryConstants
         {
             public const int MaxCategoryName = 10;
         }
@@ -32,6 +40,13 @@ namespace VetShop.Infrastructure.Constants
         {
             Pending,
             Approved
+        }
+        public enum OrderStatus
+        {
+            Pending, 
+            Sent,
+            Delivered,
+            Cancelled
         }
     }
 }

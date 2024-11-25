@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static VetShop.Infrastructure.Constants.DataConstants.Category;
+using static VetShop.Infrastructure.Constants.DataConstants.CategoryConstants;
 
 namespace VetShop.Infrastructure.Data.Models
 {
@@ -11,7 +11,7 @@ namespace VetShop.Infrastructure.Data.Models
 
         [Required]
         [MaxLength(MaxCategoryName)]
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; } = null!;
 
         public List<Product> Products { get; set; } = new List<Product>();
     }
