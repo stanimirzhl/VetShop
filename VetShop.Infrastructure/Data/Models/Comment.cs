@@ -30,6 +30,11 @@ namespace VetShop.Infrastructure.Data.Models
 
         public virtual ApplicationUser? Author { get; set; } = null!;
 
+        [ForeignKey(nameof(Product))]
+        public string? ProductId { get; set; } = null!;
+
+        public virtual Product? Product { get; set; } = null!;
+
         public CommentStatus Status { get; set; } = CommentStatus.Pending;
     }
 }

@@ -35,7 +35,14 @@ namespace VetShop.Infrastructure.Data.Models
         public Category Category { get; set; } = null!;
 
         [Required]
-        public int Quantity { get; set; }
+        public int Quantity { get; set; } = 0;
+
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+        public bool IsDeleted { get; set; }
+
+        [NotMapped]
+        public bool IsActive => Quantity > 0;
 
     }
 }
