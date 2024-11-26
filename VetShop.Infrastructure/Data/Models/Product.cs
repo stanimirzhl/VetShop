@@ -30,9 +30,16 @@ namespace VetShop.Infrastructure.Data.Models
         public string ImageUrl { get; set; } = null!;
 
         [Required]
+        [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
 
         public Category Category { get; set; } = null!;
+
+        [Required]
+        [ForeignKey(nameof(Brand))]
+        public int BrandId { get; set; }
+
+        public Brand Brand { get; set; } = null!;
 
         [Required]
         public int Quantity { get; set; } = 0;

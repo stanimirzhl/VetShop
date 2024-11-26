@@ -36,6 +36,11 @@ namespace VetShop.Infrastructure.Constants
         {
             public const int MaxCategoryName = 10;
         }
+        public static class BrandConstants
+        {
+            public const int MaxBrandName = 100;
+            public const int MinBrandName = 20;
+        }
         public enum CommentStatus
         {
             Pending,
@@ -43,7 +48,7 @@ namespace VetShop.Infrastructure.Constants
         }
         public enum OrderStatus
         {
-            Pending, 
+            Pending,
             Sent,
             Delivered,
             Cancelled

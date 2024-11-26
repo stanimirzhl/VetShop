@@ -21,6 +21,7 @@ namespace VetShop.Infrastructure.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Brand> Brands { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
