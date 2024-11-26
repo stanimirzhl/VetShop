@@ -210,6 +210,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     Quantity = 890
                 }
             };
+            builder.HasData(products);
         }
     }
 }
