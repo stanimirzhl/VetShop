@@ -27,6 +27,10 @@ namespace VetShop.Infrastructure.Data
         {
 
             modelBuilder.ApplyConfiguration(new CategoryConfigurator());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
 
 
             base.OnModelCreating(modelBuilder);
