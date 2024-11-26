@@ -14,6 +14,10 @@ namespace VetShop.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
+            builder.HasOne(p => p.Brand)
+                  .WithMany(b => b.Products)
+                  .HasForeignKey(p => p.BrandId)
+                  .OnDelete(DeleteBehavior.SetNull);
             var products = new List<Product>()
             {
                 new Product()

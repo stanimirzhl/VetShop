@@ -14,6 +14,10 @@ namespace VetShop.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
+            builder.HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
             var orders = new List<Order>
             {
                  new Order

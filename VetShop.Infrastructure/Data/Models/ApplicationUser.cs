@@ -18,5 +18,7 @@ namespace VetShop.Infrastructure.Data.Models
         [Required]
         [MaxLength(MaxUserLastName)]
         public string LastName { get; set; } = null!;
+
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

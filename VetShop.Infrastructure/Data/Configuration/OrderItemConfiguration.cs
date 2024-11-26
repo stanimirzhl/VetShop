@@ -13,6 +13,15 @@ namespace VetShop.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
+            builder.HasOne(oi => oi.Order)
+                 .WithMany(o => o.OrderItems)
+                 .HasForeignKey(oi => oi.OrderId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(oi => oi.Product)
+                .WithMany()
+                .HasForeignKey(oi => oi.ProductId)
+                .OnDelete(DeleteBehavior.SetNull);
             var orderItems = new List<OrderItem>
             {
                  new OrderItem
