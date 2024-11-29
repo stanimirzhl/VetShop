@@ -41,6 +41,16 @@ namespace VetShop.Infrastructure.Constants
             public const int MaxBrandName = 100;
             public const int MinBrandName = 20;
         }
+        public static class VeterinaryConstants
+        {
+            public const int MinSpecialtyLength = 50;
+            public const int MaxSpecialtyLength = 70;
+        }
+        public static class AppointmentConstants
+        {
+            public const int MinReasonLength = 100;
+            public const int MaxReasonLength = 500;
+        }
         public enum CommentStatus
         {
             Pending,
@@ -52,6 +62,14 @@ namespace VetShop.Infrastructure.Constants
             Sent,
             Delivered,
             Cancelled
+        }
+        public enum AppointmentStatus
+        {
+            Pending,
+            Confirmed,
+            Waiting,
+            Cancelled,
+            Completed
         }
     }
 }
