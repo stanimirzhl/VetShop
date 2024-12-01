@@ -1,7 +1,12 @@
-var builder = WebApplication.CreateBuilder(args);
+using VetShop.Extensions;
+using VetShop.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddCoreServices();
+builder.Services.AddDbServices(builder.Configuration);
 
 var app = builder.Build();
 

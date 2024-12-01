@@ -13,6 +13,6 @@ namespace VetShop.Infrastructure.Data.Models
         [MaxLength(MaxCategoryName)]
         public string Name { get; set; } = null!;
 
-        public List<Product> Products { get; set; } = new List<Product>();
+        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

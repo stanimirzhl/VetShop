@@ -29,26 +29,23 @@ namespace VetShop.Infrastructure.Data.Models
         [Required]
         public string ImageUrl { get; set; } = null!;
 
-        [Required]
         [ForeignKey(nameof(Category))]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
-        public Category Category { get; set; } = null!;
+        public virtual Category? Category { get; set; } 
 
-        [Required]
         [ForeignKey(nameof(Brand))]
-        public int BrandId { get; set; }
+        public int? BrandId { get; set; }
 
-        public Brand Brand { get; set; } = null!;
+        public virtual Brand? Brand { get; set; }
 
         [Required]
         public int Quantity { get; set; } = 0;
 
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
-        [NotMapped]
         public bool IsActive => Quantity > 0;
 
     }

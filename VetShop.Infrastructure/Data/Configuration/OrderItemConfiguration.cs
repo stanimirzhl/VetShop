@@ -22,6 +22,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                 .WithMany()
                 .HasForeignKey(oi => oi.ProductId)
                 .OnDelete(DeleteBehavior.SetNull);
+
             var orderItems = new List<OrderItem>
             {
                  new OrderItem
@@ -54,7 +55,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                  },
                  new OrderItem
                  {
-                     Id = 3,
+                     Id = 5,
                      OrderId = 2,
                      ProductId = 5,
                      Quantity = 2

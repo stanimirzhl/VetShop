@@ -13,6 +13,7 @@ namespace VetShop.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
+
             var categories = new List<Category>()
             {
                 new Category()

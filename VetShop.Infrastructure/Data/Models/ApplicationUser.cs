@@ -20,5 +20,9 @@ namespace VetShop.Infrastructure.Data.Models
         public string LastName { get; set; } = null!;
 
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+        public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
     }
 }

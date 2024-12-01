@@ -30,7 +30,7 @@ namespace VetShop.Infrastructure.Constants
             public const int MaxProductTitle = 100;
 
             public const int MinProductDescription = 100;
-            public const int MaxProductDescription = 2000;
+            public const int MaxProductDescription = 3000;
         }
         public static class CategoryConstants
         {

@@ -1,0 +1,99 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using VetShop.Core
+@using VetShop.Models.Brand
+@using System.Security.Claims
+@*@inject UserManager<User> userManager*@
+@model PagingModel<BrandViewModel>
+
+@{
+    ViewData["Title"] = "Brands";
+    //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    //var user = await userManager.FindByIdAsync(userId);
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        <i class="bi bi-check2-circle"></i> @TempData["Success"]
+    </div>
+}
+
+
+@if (!Model.Items.Any())
+{
+    <h1>
+        We currently don't have any available brands!
+    </h1>
+}
+else
+{
+    <form method="get" class="d-flex mb-4">
+        <input type="text" name="searchTerm" value="@ViewData["SearchTerm"]" placeholder="Search by brand name" class="form-control me-2" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <h1 class="text-primary">Our partnered brands</h1>
+    <table class="table table-bordered table-hover table-responsive">
+        @*<thead>
+    <tr>
+    <th>Brand-Name</th>
+    <th>Brand-Logo</th>
+    @if (User.IsInRole("Редактор"))
+    {
+    <th>Buttons for management</th>
+    }
+    </tr>
+    </thead>*@
+        <tbody>
+            @foreach (var brand in Model.Items)
+            {
+                <tr>
+                    <td>@brand.BrandName</td>
+                    <td>
+                        <img src="@brand.ImageUrl" alt="@brand.BrandName" class="img-thumbnail" style="max-height: 50px;" />
+                    </td>
+                    @*@if (User.IsInRole("Редактор"))
+            {
+            <td>
+            <a asp-controller="Brand" asp-action="Edit" class="btn btn-outline-info" asp-route-id="@brand.Id"><i class="bi bi-pencil-square"></i> Edit</a>
+            <a asp-controller="Brand" asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@brand.Id"><i class="bi bi-x-circle"></i> Delete</a>
+            </td>
+            }*@
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}
+
+<div class="container-md">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary form-control md-5">Go back</a>
+    @*@if (User.IsInRole("Редактор"))
+    {
+    <a asp-controller="Brand" asp-action="Create">
+    <button class="add-news-btn btn btn-outline-success">
+    <i class="bi bi-plus-circle"></i> Add a brand
+    </button>
+    </a>
+    }*@
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+@if (Model.Items.Any())
+{
+    <div class="d-flex justify-content-center align-items-center my-4">
+        <a asp-action="All" asp-route-pageIndex="@(Model.PageIndex - 1)" asp-route-searchTerm="@ViewData["SearchTerm"]" class="btn btn-secondary rounded @prevDisabled">
+            <i class="bi bi-chevron-left"></i> Previous
+        </a>
+        <span class="badge bg-secondary fs-6 px-3 py-2 mx-1 rounded-pill" aria-live="polite">
+            @Model.PageIndex
+        </span>
+        <a asp-action="All" asp-route-pageIndex="@(Model.PageIndex + 1)" asp-route-searchTerm="@ViewData["SearchTerm"]" class="btn btn-secondary rounded @nextDisabled">
+            Next <i class="bi bi-chevron-right"></i>
+        </a>
+    </div>
+}

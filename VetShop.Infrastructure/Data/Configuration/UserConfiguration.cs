@@ -14,6 +14,7 @@ namespace VetShop.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
+
             var hasher = new PasswordHasher<ApplicationUser>();
             var user1 = new ApplicationUser()
             {
@@ -28,11 +29,11 @@ namespace VetShop.Infrastructure.Data.Configuration
             {
                 Id = "cb2e865b-c700-40b6-af4f-9ed7429ac4bc",
                 UserName = "Guest2 User",
-                Email = "guest2@gmail.com",
-                FirstName = "Guest2",
+                Email = "veterinary@gmail.com",
+                FirstName = "Veterinary",
                 LastName = "User"
             };
-            user2.PasswordHash = hasher.HashPassword(user2, "guestN123");
+            user2.PasswordHash = hasher.HashPassword(user2, "veterinary123");
 
             builder.HasData(user1, user2);
         }

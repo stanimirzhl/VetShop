@@ -18,6 +18,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
             var orders = new List<Order>
             {
                  new Order

@@ -17,6 +17,9 @@ namespace VetShop.Infrastructure.Data.Models
         [MaxLength(MaxBrandName)]
         public string BrandName { get; set; } = null!;
 
+        [Required]
+        public string ImageUrl { get; set; } = null!;
+
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

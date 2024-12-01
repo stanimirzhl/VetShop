@@ -15,7 +15,7 @@ namespace VetShop.Infrastructure.Data.Configuration
         public void Configure(EntityTypeBuilder<Comment> builder)
         {
             builder.HasOne(c => c.Author)
-            .WithMany()
+            .WithMany(c => c.Comments)
             .HasForeignKey(c => c.AuthorId)
             .OnDelete(DeleteBehavior.SetNull);
 

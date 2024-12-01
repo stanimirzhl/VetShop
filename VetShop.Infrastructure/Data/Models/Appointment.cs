@@ -24,12 +24,12 @@ namespace VetShop.Infrastructure.Data.Models
         public string Reason { get; set; } = null!;
 
         [ForeignKey(nameof(Veterinary))]
-        public int VeterinaryId { get; set; }
+        public int? VeterinaryId { get; set; }
 
         public Veterinary? Veterinary { get; set; }
 
-        [ForeignKey(nameof(ApplicationUser))]
-        public string UserId { get; set; } = null!; 
+        [ForeignKey(nameof(User))]
+        public string UserId { get; set; } 
 
         public ApplicationUser? User { get; set; }
 

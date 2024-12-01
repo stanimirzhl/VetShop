@@ -14,10 +14,11 @@ namespace VetShop.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.HasOne(p => p.Brand)
-                  .WithMany(b => b.Products)
-                  .HasForeignKey(p => p.BrandId)
-                  .OnDelete(DeleteBehavior.SetNull);
+            builder.HasMany(x => x.Comments)
+                .WithOne(x => x.Product)
+                .HasForeignKey(x => x.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             var products = new List<Product>()
             {
                 new Product()
@@ -34,9 +35,8 @@ namespace VetShop.Infrastructure.Data.Configuration
                     "\r\n\r\nAdditives: Vitamins, provitamins, and similar substances: Vitamin A 1,000 i.u./kg, Vitamin D3 100 i.u./kg, Vitamin E 10 i.u./kg, Manganese (Manganese sulfate monohydrate) 2.5mg/kg, Selenium (Sodium selenite) 0.02mg/kg, Iodine (Calcium iodate) 0.25mg/kg, Taurine 250mg/kg. Trace elements: Zinc (Zinc sulfate monohydrate) 5.0mg/kg.\r\n\r\nAnalytical Composition: Crude protein 8.0%, Crude fat 5.0%, Crude fiber 0.2%, Crude ash 2.0%, Moisture 82%.\r\n\r\nFeeding Guide: Feed 1 can (400g) per 5kg cat per 24 hours. Adjust the amount of food based on activity level and body condition. Serve at room temperature. Always provide fresh drinking water. Storage: Store unopened cans in a dry, cool place. After opening, store in an airtight container in the fridge and use within 72 hours." +
                     "\r\n\r\nMade in Turkey.",
                     CategoryId = 1,
-                    BrandId = 41,
+                    BrandId = 12,
                     ImageUrl = "https://m.media-amazon.com/images/I/61ccbUsZsdL._AC_SL1000_.jpg",
-                    IsDeleted = false,
                     Price = 15.56m,
                     Quantity = 54
                 },
@@ -50,9 +50,8 @@ namespace VetShop.Infrastructure.Data.Configuration
                     "\r\n\r\nKey Features:\r\n\r\n    Flavorful Blend: Made with a combination of ocean fish and chicken for a taste cats love.\r\n    High-Quality Protein: Supports lean muscle development and provides essential energy.\r\n    Essential Nutrients: Packed with vitamins and minerals for a healthy, balanced diet.\r\n    Transparent Packaging: Clear can design ensures product quality and freshness.\r\n    Large Size: 3.74 kg pack, ideal for multi-cat households or long-term feeding.\r\n\r\nFeeding Guidelines: Adjust portion sizes based on your cat's weight and activity level. Always provide fresh water alongside meals." +
                     "\r\n\r\nGive your cat the best with Cat Can Ocean Fish & Chicken—the perfect meal for a happy, healthy feline!",
                     CategoryId = 1,
-                    BrandId = 25,
+                    BrandId = 11,
                     ImageUrl = "https://m.media-amazon.com/images/I/71dsU3Y0hRL._AC_SL1500_.jpg",
-                    IsDeleted = false,
                     Price = 5.99m,
                     Quantity = 100
                 },
@@ -66,8 +65,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                    "It turns out the feeder runs on both electricity and batteries, so even if the power goes out, I still get my meals. Now, mom doesn’t have to worry about me missing a meal.",
                     ImageUrl = "https://m.media-amazon.com/images/I/71823ihrMEL._AC_SL1500_.jpg",
                     CategoryId = 1,
-                    BrandId = 25,
-                    IsDeleted = false,
+                    BrandId = 3,
                     Price = 35.99m,
                     Quantity = 23
                 },
@@ -81,8 +79,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     "\r\n\r\nPerfect for active dogs, this complete meal delivers the energy and nutrients your pet needs to stay strong and active throughout the day. Free from artificial preservatives and fillers, it offers a wholesome, natural meal that your dog will love.",
                     ImageUrl = "https://m.media-amazon.com/images/I/61JUpVMSEkL._AC_SL1500_.jpg",
                     CategoryId = 2,
-                    BrandId = 26,
-                    IsDeleted = false,
+                    BrandId = 7,
                     Price = 10.99m,
                     Quantity = 3000
                 },
@@ -98,8 +95,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     "\r\n\r\nIdeal as a standalone meal or as a tasty topper to dry kibble, Dog Food Mixed in Gravy is suitable for dogs of all breeds and sizes, providing them with the nutrients they need to stay happy, active, and healthy.",
                     ImageUrl = "https://m.media-amazon.com/images/I/61bvaNMzZQL._AC_SL1024_.jpg",
                     CategoryId = 2,
-                    BrandId = 29,
-                    IsDeleted = false,
+                    BrandId = 9,
                     Price = 15.89m,
                     Quantity = 5129
                 },
@@ -114,8 +110,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     "\r\n\r\nWhether served as a stand-alone meal or as a topping for dry kibble, Meaty Chunks Mixed in Jelly Wet Dog Food is ideal for dogs of all sizes and breeds. Your dog will love every bite, and you'll love knowing they’re getting a balanced, nutritious meal.",
                     ImageUrl = "https://m.media-amazon.com/images/I/71qVGX-Z22L._AC_SL1500_.jpg",
                     CategoryId = 2,
-                    BrandId = 30,
-                    IsDeleted = false,
+                    BrandId = 10,
                     Price = 14.89m,
                     Quantity = 3450
                 },
@@ -131,8 +126,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     " With its delicious taste and balanced nutrition, it's the perfect choice for keeping your dog happy and thriving.",
                     ImageUrl = "https://m.media-amazon.com/images/I/616nCQ1rIUL._AC_SL1500_.jpg",
                     CategoryId = 2,
-                    BrandId = 31,
-                    IsDeleted = false,
+                    BrandId = 12,
                     Price = 19.99m,
                     Quantity = 1256
                 },
@@ -143,8 +137,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     Description = "Adult Lamb & Rice 2 kg Bag - Hypoallergenic Dry Dog Food\r\n\r\nProvide your adult dog with a nutritious, easily digestible meal with our Adult Lamb & Rice Dry Dog Food. Specially formulated with high-quality lamb as the primary protein source and rice for easy digestion, this hypoallergenic recipe is ideal for dogs with food sensitivities or allergies.\r\n\r\nThis 2 kg bag contains a balanced mix of essential nutrients, including vitamins, minerals, and omega fatty acids, to support your dog’s overall health, strong muscles, shiny coat, and healthy skin. The lamb provides a high-quality, lean protein, while rice serves as a gentle carbohydrate that helps maintain digestive health.\r\n\r\nFree from common allergens like grains, gluten, and artificial additives, this dry dog food ensures that your dog gets a wholesome, satisfying meal without unnecessary fillers. It’s the perfect choice for adult dogs of all breeds, especially those with sensitive stomachs or allergies.\r\n\r\nGive your dog a delicious, healthy, and hypoallergenic diet with Adult Lamb & Rice 2 kg Bag, and support their well-being every day!",
                     ImageUrl = "https://m.media-amazon.com/images/I/81bM6ccyZ1L._AC_SL1500_.jpg",
                     CategoryId = 2,
-                    BrandId = 35,
-                    IsDeleted = false,
+                    BrandId = 13,
                     Price = 12.99m,
                     Quantity = 567
                 },
@@ -161,8 +154,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     "Country’s Best Gra Mix offers an ideal solution for anyone raising healthy, happy chickens or quail.",
                     ImageUrl = "https://www.foodforbirds.co.uk/wp-content/uploads/2024/02/Countrys-Best-Gra-Mix-Chick-Quail-20kg-scaled.jpg",
                     CategoryId = 3,
-                    BrandId = 21,
-                    IsDeleted = false,
+                    BrandId = 20,
                     Price = 23.98m,
                     Quantity = 300
                 },
@@ -176,8 +168,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     "\r\n\r\nAfrican Parrot Mix is perfect for parrots of all sizes, providing a rich, enjoyable diet that can be served as a standalone meal or as part of a balanced feeding routine. Keep your parrot healthy, happy, and full of energy with this premium mix tailored specifically for their needs.",
                     ImageUrl = "https://petmarket.bg/wp-content/uploads/2022/02/5410340222010pack.png",
                     CategoryId = 3,
-                    BrandId = 21,
-                    IsDeleted = false,
+                    BrandId = 18,
                     Price = 6.99m,
                     Quantity = 123
                 },
@@ -192,8 +183,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     "With the 2 x 700g pack, you’ll have enough to feed your pet for weeks, ensuring they enjoy every meal!",
                     ImageUrl = "https://m.media-amazon.com/images/I/61is0DrvB4L._AC_SL1024_.jpg",
                     CategoryId = 3,
-                    BrandId = 1,
-                    IsDeleted = false,
+                    BrandId = 2,
                     Price = 12.97m,
                     Quantity = 467
                 },
@@ -208,8 +198,7 @@ namespace VetShop.Infrastructure.Data.Configuration
                     "Whether you serve it as a main meal or mix it with fresh fruits and vegetables, Supreme Hamster and Gerbil Mix Muesli Mealworm Fibre Food ensures your pet enjoys a balanced, tasty diet every day.",
                     ImageUrl = "https://m.media-amazon.com/images/I/514qbqR-lUL._AC_.jpg",
                     CategoryId = 3,
-                    BrandId = 12,
-                    IsDeleted = false,
+                    BrandId = 4,
                     Price = 7.89m,
                     Quantity = 890
                 }
