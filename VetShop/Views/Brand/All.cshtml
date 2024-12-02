@@ -52,6 +52,7 @@ else
                         <img src="@brand.ImageUrl" alt="@brand.BrandName" class="img-thumbnail" style="max-height: 50px;" />
                     </td>
                     <a asp-controller="Brand" asp-action="Edit" class="btn btn-outline-info" asp-route-id="@brand.Id"><i class="bi bi-pencil-square"></i>Edit</a>
+                    <a asp-controller="Brand" asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@brand.Id"><i class="bi bi-x-circle"></i> Delete</a>
                     @*@if (User.IsInRole("Редактор"))
             {
             <td>

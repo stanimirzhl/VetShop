@@ -19,7 +19,7 @@ namespace VetShop.Controllers
             this.brandService = brandService;
             this.logger = logger;
         }
-
+        [HttpGet]
         public async Task<IActionResult> All(string? searchTerm, int pageIndex = 1, int pageSize = 10)
         {
             ViewData["SearchTerm"] = searchTerm;
@@ -34,7 +34,7 @@ namespace VetShop.Controllers
 
             return View(pagedViewModels);
         }
-
+        [HttpGet]
         public IActionResult Add()
         {
             var brandForm = new BrandFormModel()
@@ -44,7 +44,6 @@ namespace VetShop.Controllers
             return View(brandForm);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(BrandFormModel formModel)
         {
             if (!ModelState.IsValid)
@@ -78,14 +77,13 @@ namespace VetShop.Controllers
             }
             catch (NonExistentEntity ex)
             {
-                logger.LogError(ex, "(GET)Not found request - Brand/Edit ");
+                logger.LogError(ex, "(GET)Not found request - Brand/Edit");
                 return NotFound();
             }
 
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, BrandFormModel model)
         {
             if (!ModelState.IsValid)
@@ -99,7 +97,7 @@ namespace VetShop.Controllers
             }
             catch (NonExistentEntity ex)
             {
-                logger.LogError(ex, "(Post)Not found request - Brand/Edit ");
+                logger.LogError(ex, "(Post)Not found request - Brand/Edit");
                 return NotFound();
             }
             var brandServiceModel = new BrandServiceModel()
@@ -110,6 +108,49 @@ namespace VetShop.Controllers
             };
 
             await brandService.EditAsync(brandServiceModel);
+
+
+            return RedirectToAction("All");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var brand = await brandService.GetByIdAsync(id);
+
+                var model = new BrandDeleteViewModel
+                {
+                    Id = id,
+                    BrandName = brand.Name,
+                    ImageUrl = brand.ImageUrl
+                };
+
+                return View(model);
+            }
+            catch (NonExistentEntity ex)
+            {
+                logger.LogError(ex, "(GET)Not found request - Brand/Delete");
+                return NotFound();
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, BrandDeleteViewModel model)
+        {
+
+            try
+            {
+                var brand = await brandService.GetByIdAsync(id);
+            }
+            catch (NonExistentEntity ex)
+            {
+                logger.LogError(ex, "(Post)Not found request - Brand/Delete");
+                return NotFound();
+            }
+
+            await brandService.DeleteAsync(model.Id);
 
 
             return RedirectToAction("All");

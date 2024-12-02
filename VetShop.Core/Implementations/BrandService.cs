@@ -62,6 +62,7 @@ namespace VetShop.Core.Implementations
 
         public async Task<BrandServiceModel?> GetByIdAsync(int id)
         {
+            logger.LogWarning("Edit brand method has been invkoed, potential exception to be thrown");
             var brand = await repository.GetByIdAsync(id);
             return brand == null ? throw new NonExistentEntity($"Brand with ID {id} not found.") : new BrandServiceModel
             {
@@ -73,6 +74,7 @@ namespace VetShop.Core.Implementations
 
         public async Task AddAsync(BrandServiceModel brandModel)
         {
+            logger.LogInformation("Add brand method has been invoked");
             var brand = new Brand
             {
                 BrandName = brandModel.Name,
@@ -84,6 +86,7 @@ namespace VetShop.Core.Implementations
 
         public async Task EditAsync(BrandServiceModel brandModel)
         {
+            logger.LogWarning("Edit brand method has been invoked, potential exception to be thrown");
             var brand = await repository.GetByIdAsync(brandModel.Id);
 
             if (brand == null)
@@ -106,7 +109,7 @@ namespace VetShop.Core.Implementations
                 throw new NonExistentEntity($"Brand with ID {id} not found.");
             }
 
-            await repository.DeleteAsync(brand);
+            await repository.DeleteAsync(brand.Id);
             await repository.SaveChangesAsync();
         }
     }
