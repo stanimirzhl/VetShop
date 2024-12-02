@@ -80,7 +80,6 @@ namespace VetShop.Core.Implementations
             };
 
             await repository.AddAsync(brand);
-            await repository.SaveChangesAsync();
         }
 
         public async Task EditAsync(BrandServiceModel brandModel)

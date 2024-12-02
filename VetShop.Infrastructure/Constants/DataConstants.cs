@@ -39,7 +39,7 @@ namespace VetShop.Infrastructure.Constants
         public static class BrandConstants
         {
             public const int MaxBrandName = 100;
-            public const int MinBrandName = 20;
+            public const int MinBrandName = 5;
         }
         public static class VeterinaryConstants
         {
@@ -70,6 +70,16 @@ namespace VetShop.Infrastructure.Constants
             Waiting,
             Cancelled,
             Completed
+        }
+        public static class ExceptionMessagesConstants
+        {
+            public const string BrandNameRequiredMessage = "Field for brand name is required!";
+            public const string BrandNameLengthMessage = "Length of field brand name must be between {2} and {1} characters long!";
+
+            public const string ImageUrlRequiredMessage = "Field for image url is required!";
+
+            public const string ImageUrlFormatMessage = "Field for image url is not in the correct format!";
+
         }
     }
 }

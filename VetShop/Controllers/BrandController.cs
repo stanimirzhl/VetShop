@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VetShop.Core;
 using VetShop.Core.Interfaces;
+using VetShop.Core.Models;
 using VetShop.Models.Brand;
 
 namespace VetShop.Controllers
@@ -31,5 +32,30 @@ namespace VetShop.Controllers
             return View(pagedViewModels);
         }
 
+        public IActionResult Add()
+        {
+            var brandForm = new BrandFormModel()
+            {
+
+            };
+            return View(brandForm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(BrandFormModel formModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(formModel);
+            }
+
+            var brandServiceModel = new BrandServiceModel
+            {
+                Name = formModel.BrandName,
+                ImageUrl = formModel.ImageUrl
+            };
+
+            await brandService.AddAsync(brandServiceModel);
+            return RedirectToAction("All");
+        }
     }
 }
