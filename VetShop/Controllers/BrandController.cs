@@ -35,6 +35,28 @@ namespace VetShop.Controllers
             return View(pagedViewModels);
         }
         [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            try
+            {
+                var brand = await brandService.GetByIdAsync(id);
+
+                var model = new BrandDetailsViewModel
+                {
+                    BrandName = brand.Name,
+                    ImageUrl = brand.ImageUrl
+                };
+
+                return View(model);
+            }
+            catch (NonExistentEntity ex)
+            {
+                logger.LogError(ex, "(GET)Not found request - Brand/Details");
+                return NotFound();
+            }
+
+        }
+        [HttpGet]
         public IActionResult Add()
         {
             var brandForm = new BrandFormModel()
