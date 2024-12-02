@@ -63,7 +63,7 @@ namespace VetShop.Core.Implementations
         public async Task<BrandServiceModel?> GetByIdAsync(int id)
         {
             var brand = await repository.GetByIdAsync(id);
-            return brand == null ? null : new BrandServiceModel
+            return brand == null ? throw new NonExistentEntity($"Brand with ID {id} not found.") : new BrandServiceModel
             {
                 Id = brand.Id,
                 Name = brand.BrandName,
