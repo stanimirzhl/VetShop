@@ -4,30 +4,25 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
+    <h1 class="text-center">Brand Details</h1>
 
-<div>
-    <h4>BrandDetailsViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BrandName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BrandName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            <img src="@Model.ImageUrl" style="max-height: 250px;" />
-        </dd>
-    </dl>
+    <div class="card shadow-lg mt-4">
+        <div class="row g-0">
+            <div class="col-md-4 text-center">
+                <img src="@Model.ImageUrl" class="img-fluid rounded-start p-3" style="max-height: 250px;" alt="@Model.BrandName logo" />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="card-title">@Model.BrandName</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        <a asp-action="Edit" asp-controller="Brand" class="btn btn-primary me-2">Edit Brand</a>
+        <a asp-action="All" asp-controller="Brand" class="btn btn-secondary">Back to All</a>
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="All">Back to List</a>
-</div>
+

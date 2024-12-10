@@ -15,7 +15,7 @@ namespace VetShop.Core.Implementations
     public class BrandService : IBrandService
     {
         private readonly IRepository<Brand> repository;
-        ILogger<BrandService> logger;
+        private ILogger<BrandService> logger;
 
         public BrandService(IRepository<Brand> repository, ILogger<BrandService> logger)
         {
@@ -47,7 +47,15 @@ namespace VetShop.Core.Implementations
             return pagedBrands;
         }
 
-
+        public async Task<List<BrandServiceModel>> GetAllBrandsAsync()
+        {
+            return  await repository.AllReadOnly().Select(b => new BrandServiceModel
+            {
+                Id = b.Id,
+                Name = b.BrandName,
+                ImageUrl = b.ImageUrl
+            }).ToListAsync();
+        }
 
         public async Task<IEnumerable<BrandServiceModel>> GetAllAsync()
         {
@@ -62,7 +70,7 @@ namespace VetShop.Core.Implementations
 
         public async Task<BrandServiceModel?> GetByIdAsync(int id)
         {
-            logger.LogWarning("Edit brand method has been invkoed, potential exception to be thrown");
+            logger.LogWarning("Edit brand method has been invoked, potential exception to be thrown");
             var brand = await repository.GetByIdAsync(id);
             return brand == null ? throw new NonExistentEntity($"Brand with ID {id} not found.") : new BrandServiceModel
             {

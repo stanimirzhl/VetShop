@@ -161,21 +161,35 @@ namespace VetShop.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id, BrandDeleteViewModel model)
         {
-
+            if (id != model.Id)
+            {
+                logger.LogWarning("Mismatch between route ID ({RouteId}) and model ID ({ModelId})", id, model.Id);
+                return BadRequest("Invalid request");
+            }
             try
             {
                 var brand = await brandService.GetByIdAsync(id);
+                if (brand == null)
+                {
+                    logger.LogWarning("Brand with ID {BrandId} not found for deletion", id);
+                    return NotFound();
+                }
+
+                await brandService.DeleteAsync(id);
+                logger.LogInformation("Brand with ID {BrandId} successfully deleted", id);
+
+                return RedirectToAction("All");
             }
             catch (NonExistentEntity ex)
             {
-                logger.LogError(ex, "(Post)Not found request - Brand/Delete");
+                logger.LogError(ex, "Brand with ID {BrandId} does not exist", id);
                 return NotFound();
             }
-
-            await brandService.DeleteAsync(model.Id);
-
-
-            return RedirectToAction("All");
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An unexpected error occurred while deleting brand with ID {BrandId}", id);
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

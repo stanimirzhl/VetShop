@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VetShop.Core.Models;
+using VetShop.Infrastructure.Data.Models;
 
 namespace VetShop.Core.Interfaces
 {
@@ -15,5 +16,6 @@ namespace VetShop.Core.Interfaces
         Task AddAsync(BrandServiceModel brand);
         Task EditAsync(BrandServiceModel brand);
         Task DeleteAsync(int id);
+        Task<List<BrandServiceModel>> GetAllBrandsAsync();
     }
 }

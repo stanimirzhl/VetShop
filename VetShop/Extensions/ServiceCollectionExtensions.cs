@@ -15,6 +15,7 @@ namespace VetShop.Extensions
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IProductService, ProductService>();
 
             services.AddMvc(options =>
                 options
