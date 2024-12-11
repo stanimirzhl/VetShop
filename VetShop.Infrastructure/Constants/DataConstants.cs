@@ -31,6 +31,11 @@ namespace VetShop.Infrastructure.Constants
 
             public const int MinProductDescription = 100;
             public const int MaxProductDescription = 3000;
+
+            public const string MinProductPrice = "1";
+            public const string MaxProductPrice = "4999";
+
+            public const int MinProductQuantity = 1;
         }
         public static class CategoryConstants
         {
@@ -80,6 +85,21 @@ namespace VetShop.Infrastructure.Constants
 
             public const string ImageUrlFormatMessage = "Field for image url is not in the correct format!";
 
+            public const string ProductTitleRequiredMessage = "Fieled for product title is required!";
+            public const string ProductTitleLengthMessage = "Length of field product title must be between {2} and {1} characters long!";
+
+            public const string ProductPriceRequiredMessage = "Fieled for product price is required!";
+            public const string ProductPriceLengthMessage = "Field for product price must be between {2} and {1}!";
+
+            public const string ProductDescriptionRequiredMessage = "Fieled for product description is required!";
+            public const string ProductDescriptionLengthMessage = "Length of field brand description must be between {2} and {1} characters long!";
+
+            public const string ProductCategoryIdRequiredMessage = "Fieled for product category is required!";
+            public const string ProductBrandIdRequiredMessage = "Fieled for product brand is required!";
+
+            public const string ProductQuantityRequiredMessage = "Fieled for product quantity is required!";
+
+            public const string ProductQuantityMessage = "Field for product quantity cannot be below or 0";
         }
     }
 }

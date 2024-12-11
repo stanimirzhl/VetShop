@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -119,6 +120,17 @@ namespace VetShop.Core.Implementations
 
             await repository.DeleteAsync(brand.Id);
             await repository.SaveChangesAsync();
+        }
+
+        public async Task<List<SelectListItem>> GetBrandsIntoSelectList()
+        {
+            var brands = await this.GetAllAsync();
+            return brands.Select(b => new SelectListItem
+            {
+                Value = b.Id.ToString(),
+                Text = b.Name
+
+            }).ToList();
         }
     }
 }

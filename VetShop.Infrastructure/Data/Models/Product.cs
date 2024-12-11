@@ -32,12 +32,12 @@ namespace VetShop.Infrastructure.Data.Models
         [ForeignKey(nameof(Category))]
         public int? CategoryId { get; set; }
 
-        public virtual Category? Category { get; set; } 
+        public Category Category { get; set; }
 
         [ForeignKey(nameof(Brand))]
         public int? BrandId { get; set; }
 
-        public virtual Brand? Brand { get; set; }
+        public Brand Brand { get; set; } 
 
         [Required]
         public int Quantity { get; set; } = 0;

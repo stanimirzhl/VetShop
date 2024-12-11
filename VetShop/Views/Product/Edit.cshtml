@@ -1,0 +1,87 @@
+﻿@using VetShop.Models.Product
+@{
+    ViewData["Title"] = "Edit Product";
+}
+@model ProductFormModel
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-primary bg-gradient ml-0 py-3 rounded">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Edit Product</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <form asp-controller="Products" asp-action="Edit" enctype="multipart/form-data" method="post" class="row">
+            <div class="border p-3">
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Title" class="col-form-label p-lg-2">Name of the product:</label>
+                    <input asp-for="Title" type="text" class="form-control border-0 shadow" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Price" class="col-form-label p-lg-2">Price of the product:</label>
+                    <input asp-for="Price" type="number" step="0.01" class="form-control border-0 shadow" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="ImageUrl" class="col-form-label p-1">ImageUrl:</label>
+                    <input asp-for="ImageUrl" type="url" class="form-control border-0 shadow" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Description" class="col-form-label p-lg-2">Description of the product:</label>
+                    <textarea asp-for="Description" class="form-control border-0 shadow" id="description" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Quantity" class="col-form-label p-lg-2">Quantity:</label>
+                    <input asp-for="Quantity" type="number" class="form-control border-0 shadow" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-3 col-12">
+                    <label asp-for="CategoryId" class="form-label">Category:</label>
+                    <select asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Value", "Text"))" class="form-select border-0 shadow">
+                        <option disabled selected value="0">Choose category</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-3 col-12">
+                    <label asp-for="BrandId" class="form-label">Brand:</label>
+                    <select asp-for="BrandId" asp-items="@(new SelectList(Model.Brands, "Value", "Text"))" class="form-select border-0 shadow">
+                        <option disabled selected value="0">Choose brand of the product</option>
+                    </select>
+                    <span asp-validation-for="BrandId" class="text-danger"></span>
+                </div>
+
+                <div class="col-12 py-3">
+                    <button asp-controller="Product" asp-action="Edit" type="submit" class="btn btn-primary p-2 rounded-start">Update</button>
+                    <a asp-controller="Product" asp-action="All" class="btn btn-secondary p-2 rounded-end">Go back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var textarea = document.getElementById("description");
+
+        textarea.addEventListener("input", function () {
+            this.style.height = "auto";
+            this.style.height = (this.scrollHeight) + "px";
+        });
+    });
+</script>

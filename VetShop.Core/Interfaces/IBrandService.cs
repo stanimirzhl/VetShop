@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,6 @@ namespace VetShop.Core.Interfaces
         Task EditAsync(BrandServiceModel brand);
         Task DeleteAsync(int id);
         Task<List<BrandServiceModel>> GetAllBrandsAsync();
+        Task<List<SelectListItem>> GetBrandsIntoSelectList();
     }
 }

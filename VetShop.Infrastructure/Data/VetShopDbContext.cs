@@ -30,14 +30,14 @@ namespace VetShop.Infrastructure.Data
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Brand)
-                .WithMany()
+                .WithMany(p => p.Products)
                 .HasForeignKey(p => p.BrandId)
                 .OnDelete(DeleteBehavior.SetNull);
 
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
-                .WithMany()
+                .WithMany(p => p.Products)
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
 
