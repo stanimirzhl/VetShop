@@ -41,12 +41,11 @@ namespace VetShop.Core.Implementations
                     IsDeleted = p.IsDeleted
                 })
                 .ToListAsync();
-
         }
 
         public async Task<ProductServiceModel?> GetByIdAsync(int id)
         {
-            var product = await repository.All()
+            var product = await repository.All().Include(p => p.Category).Include(p => p.Brand)
                 .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
 
             if (product == null) throw new NonExistentEntity($"Product with ID {id} not found.");
@@ -59,7 +58,9 @@ namespace VetShop.Core.Implementations
                 Price = product.Price,
                 ImageUrl = product.ImageUrl,
                 CategoryId = product.CategoryId,
+                CategoryName = product.Category.Name,
                 BrandId = product.BrandId,
+                BrandName = product.Brand.BrandName,
                 Quantity = product.Quantity,
                 IsDeleted = product.IsDeleted
             };

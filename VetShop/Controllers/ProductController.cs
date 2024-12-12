@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using VetShop.Core;
 using VetShop.Core.Implementations;
 using VetShop.Core.Interfaces;
 using VetShop.Core.Models;
+using VetShop.Models.Brand;
 using VetShop.Models.Product;
 
 namespace VetShop.Controllers
@@ -141,6 +143,84 @@ namespace VetShop.Controllers
             {
                 return NotFound();
             }
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var product = await productService.GetByIdAsync(id);
+
+                var viewModel = new ProductDeleteViewModel
+                {
+                    Id = product.Id,
+                    Title = product.Title,
+                    CategoryName = product.CategoryName,
+                    BrandName = product.BrandName,
+                    Price = product.Price,
+                    Quantity = product.Quantity,
+                    ImageUrl = product.ImageUrl
+                };
+
+                return View(viewModel);
+            }
+            catch (NonExistentEntity ex)
+            {
+                return NotFound();
+            }
+            
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, ProductDeleteViewModel model)
+        {
+            if (id != model.Id)
+            {
+                logger.LogWarning("Mismatch between route ID ({RouteId}) and model ID ({ModelId})", id, model.Id);
+                return BadRequest("Invalid request");
+            }
+            try
+            {
+                var brand = await productService.GetByIdAsync(id);
+
+                await productService.DeleteAsync(id);
+
+                return RedirectToAction("All");
+            }
+            catch (NonExistentEntity ex)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            try
+            {
+                var product = await productService.GetByIdAsync(id);
+
+                var viewModel = new ProductViewModel
+                {
+                    Id = product.Id,
+                    Title = product.Title,
+                    Description = product.Description,
+                    CategoryName = product.CategoryName,
+                    BrandName = product.BrandName,
+                    Price = product.Price,
+                    Quantity = product.Quantity,
+                    ImageUrl = product.ImageUrl
+                };
+
+                return View(viewModel);
+            }
+            catch (NonExistentEntity ex)
+            {
+                return NotFound();
+            }
+
         }
 
     }

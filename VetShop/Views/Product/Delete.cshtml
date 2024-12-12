@@ -1,0 +1,78 @@
+﻿@using VetShop.Models.Product
+@model ProductDeleteViewModel
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-danger bg-gradient ml-0 py-3 rounded">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Delete Product</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <form asp-controller="Product" asp-action="Delete" method="post" class="row">
+            <div class="border p-3">
+                <h4 class="text-danger">Are you sure you want to delete this product?</h4>
+
+                <div class="form-group py-2 col-12">
+                    <label class="col-form-label p-lg-2">Product Name:</label>
+                    <p class="form-control border-0 shadow">@Model.Title</p>
+                </div>
+
+                <div class="form-group py-2 col-12">
+                    <label class="col-form-label p-lg-2">Price:</label>
+                    <p class="form-control border-0 shadow">@Model.Price.ToString("C")</p>
+                </div>
+                @if (Model.CategoryName != null)
+                {
+                    <div class="form-group py-2 col-12">
+                        <label class="col-form-label p-lg-2">Category:</label>
+                        <p class="form-control border-0 shadow">@Model.CategoryName</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group py-2 col-12">
+                        <label class="col-form-label p-lg-2">Category:</label>
+                        <p class="form-control border-0 shadow">Not existent category</p>
+                    </div>
+                }
+                @if(Model.BrandName != null)
+                {
+                    <div class="form-group py-2 col-12">
+                        <label class="col-form-label p-lg-2">Brand:</label>
+                        <p class="form-control border-0 shadow">@Model.BrandName</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group py-2 col-12">
+                        <label class="col-form-label p-lg-2">Brand:</label>
+                        <p class="form-control border-0 shadow">Non existent brand</p>
+                    </div>
+                }
+
+                <div class="form-group py-2 col-12">
+                    <label class="col-form-label p-lg-2">Quantity:</label>
+                    <p class="form-control border-0 shadow">@Model.Quantity</p>
+                </div>
+
+                <div class="form-group py-2 col-12">
+                    <label class="col-form-label p-lg-2">Image:</label>
+                    <img src="@Model.ImageUrl" alt="Product Image" class="img-fluid rounded shadow" style="max-width: 300px;" />
+                </div>
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="col-12 py-3">
+                    <button type="submit" class="btn btn-danger p-2 rounded-start">Delete</button>
+                    <a asp-controller="Products" asp-action="All" class="btn btn-secondary p-2 rounded-end">Back to all</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

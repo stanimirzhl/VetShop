@@ -14,7 +14,9 @@ namespace VetShop.Core.Models
         public decimal Price { get; set; }
         public string ImageUrl { get; set; } = null!;
         public int? CategoryId { get; set; }
+        public string? CategoryName { get; set; }
         public int? BrandId { get; set; }
+        public string? BrandName { get; set; }
         public int Quantity { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive => Quantity > 0;

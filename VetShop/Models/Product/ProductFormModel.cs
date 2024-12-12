@@ -12,6 +12,7 @@ namespace VetShop.Models.Product
         public string Title { get; set; } = null!;
 
         [Range(typeof(decimal),MinProductPrice, MaxProductPrice, ErrorMessage = ProductPriceLengthMessage)]
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
         [Url(ErrorMessage = ImageUrlFormatMessage)]

@@ -1,0 +1,104 @@
+﻿@using VetShop.Models.Product
+@{
+    ViewData["Title"] = $"{Model.Title}";
+}
+@model ProductViewModel
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-primary bg-gradient py-3 rounded">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Product Details: @Model.Title</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid rounded" />
+            </div>
+
+            <div class="col-md-8">
+                <div class="form-group mb-3">
+                    <label><strong>Price:</strong></label>
+                    <p>@Model.Price.ToString("C")</p>
+                </div>
+                <div class="form-group mb-3">
+                    <label><strong>Quantity:</strong></label>
+                    <p>@Model.Quantity</p>
+                </div>
+                <div class="form-group mb-3">
+                    <label><strong>Category:</strong></label>
+                    <p>@Model.CategoryId</p>
+                </div>
+                <div class="form-group mb-3">
+                    <label><strong>Brand:</strong></label>
+                    <p>@Model.BrandId</p> 
+                </div>
+
+                <div class="form-group mb-3">
+                    <label><strong>Description:</strong></label>
+                    <div class="product-description">
+                        @Html.Raw(Model.Description)
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <button class="btn btn-success btn-lg" onclick="addToCart(@Model.Id)">Добави в кошницата</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-2">
+            @*<h4>Коментари</h4>
+            @if (Model.PagedComments.Any())
+            {
+                @foreach (var comment in Model.PagedComments)
+                {
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            @if (comment.Author != null)
+                            {
+                                <p class="card-text"><strong>Автор:</strong> @comment.Author.UserName</p>
+                            }
+                            else
+                            {
+                                <p class="card-text"><strong>Автор:</strong> Изтрит потребител</p>
+                            }
+                            <h6 class="card-subtitle mb-2 text-muted">Публикуван на: @comment.DateTime.ToString("MMMM dd, yyyy", new System.Globalization.CultureInfo("bg-BG"))</h6>
+                            <h6 class="card-text"><strong>@comment.Title</strong></h6>
+                            <p class="card-text">@comment.Content</p>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Няма коментари.</p>
+            }*@
+        </div>
+
+        <div class="mt-4">
+            <h4>Оставете коментар</h4>
+            <form method="post" action="@Url.Action("AddComment", "Product", new { productId = Model.Id })">
+                <div class="mb-3">
+                    <label for="commentTitle" class="form-label">Заглавие</label>
+                    <input type="text" class="form-control" id="commentTitle" name="Title" required />
+                </div>
+                <div class="mb-3">
+                    <label for="commentContent" class="form-label">Коментар</label>
+                    <textarea class="form-control" id="commentContent" name="Content" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Изпрати коментар</button>
+            </form>
+        </div>
+
+        <div class="col-12 py-3 text-center">
+            <a asp-controller="Products" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary rounded-start">Edit Product</a>
+            <a asp-controller="Products" asp-action="All" class="btn btn-secondary rounded-end">Back to Products</a>
+        </div>
+    </div>
+</div>
+
+

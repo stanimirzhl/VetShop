@@ -169,11 +169,6 @@ namespace VetShop.Controllers
             try
             {
                 var brand = await brandService.GetByIdAsync(id);
-                if (brand == null)
-                {
-                    logger.LogWarning("Brand with ID {BrandId} not found for deletion", id);
-                    return NotFound();
-                }
 
                 await brandService.DeleteAsync(id);
                 logger.LogInformation("Brand with ID {BrandId} successfully deleted", id);

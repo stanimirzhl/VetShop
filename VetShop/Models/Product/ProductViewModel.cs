@@ -12,9 +12,9 @@
         public string CategoryName { get; set; }
         public int? BrandId { get; set; }
         public string BrandName { get; set; }
+        public int Quantity { get; set; }
 
         public List<int> SelectedBrandIds { get; set; } = new List<int>();
-
 
     }
 }
