@@ -15,6 +15,9 @@ namespace VetShop.Infrastructure.Constants
 
             public const int MinUserLastName = 3;
             public const int MaxUserLastName = 25;
+
+            public const int MinUsersName = 4;
+            public const int MaxUsersName = 20;
         }
         public static class CommentConstants
         {
@@ -85,21 +88,29 @@ namespace VetShop.Infrastructure.Constants
 
             public const string ImageUrlFormatMessage = "Field for image url is not in the correct format!";
 
-            public const string ProductTitleRequiredMessage = "Fieled for product title is required!";
+            public const string ProductTitleRequiredMessage = "Field for product title is required!";
             public const string ProductTitleLengthMessage = "Length of field product title must be between {2} and {1} characters long!";
 
-            public const string ProductPriceRequiredMessage = "Fieled for product price is required!";
+            public const string ProductPriceRequiredMessage = "Field for product price is required!";
             public const string ProductPriceLengthMessage = "Field for product price must be between {2} and {1}!";
 
-            public const string ProductDescriptionRequiredMessage = "Fieled for product description is required!";
+            public const string ProductDescriptionRequiredMessage = "Field for product description is required!";
             public const string ProductDescriptionLengthMessage = "Length of field brand description must be between {2} and {1} characters long!";
 
-            public const string ProductCategoryIdRequiredMessage = "Fieled for product category is required!";
-            public const string ProductBrandIdRequiredMessage = "Fieled for product brand is required!";
+            public const string ProductCategoryIdRequiredMessage = "Field for product category is required!";
+            public const string ProductBrandIdRequiredMessage = "Field for product brand is required!";
 
-            public const string ProductQuantityRequiredMessage = "Fieled for product quantity is required!";
+            public const string ProductQuantityRequiredMessage = "Field for product quantity is required!";
 
             public const string ProductQuantityMessage = "Field for product quantity cannot be below or 0";
+
+            public const string UserFirstNameMessage = "Field for User first name is required!";
+            public const string UserLastNameMessage = "Field for User last name is required!";
+            public const string UsersUserNameMessage = "Field for User name is required!";
+
+            public const string UserFirstNameLegnthMessage = "Length of field first name must be between {2} and {1} characters long!";
+            public const string UserLastNameLegnthMessage = "Length of field last name must be between {2} and {1} characters long!";
+            public const string UsersUserNameLegnthMessage = "Length of field user name must be between {2} and {1} characters long!";
         }
     }
 }

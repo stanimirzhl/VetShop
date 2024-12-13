@@ -2,11 +2,14 @@ using VetShop.Extensions;
 using VetShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddCoreServices();
 builder.Services.AddDbServices(builder.Configuration);
+builder.Services.AddIdentityServices();
 
 var app = builder.Build();
 
@@ -23,10 +26,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+
+app.MapRazorPages();
 
 app.Run();

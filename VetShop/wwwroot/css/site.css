@@ -40,3 +40,11 @@ body {
 .product-description li {
     margin-bottom: 0.5rem;
 }
+
+.btn-hover:hover {
+    background-color: #0056b3;
+    color: #fff;
+    border-color: #004085;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.8); /* Updated shadow effect */
+    transition: box-shadow 0.3s ease;
+}

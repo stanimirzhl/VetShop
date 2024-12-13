@@ -1,0 +1,85 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8 col-10">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="shadow-lg p-4 bg-white rounded">
+                <h2 class="text-center mb-3">Registration</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Input.Email" class="form-label">Email:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                        <input asp-for="Input.Email" class="form-control" autocomplete="email" />
+                    </div>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Input.UserName" class="form-label">User name:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        <input asp-for="Input.UserName" class="form-control" autocomplete="username" />
+                    </div>
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Input.FirstName" class="form-label">First name:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        <input asp-for="Input.FirstName" class="form-control" autocomplete="given-name" />
+                    </div>
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Input.LastName" class="form-label">Last name:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        <input asp-for="Input.LastName" class="form-control" autocomplete="family-name" />
+                    </div>
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Input.Password" class="form-label">Password:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input asp-for="Input.Password" type="password" class="form-control" autocomplete="new-password" />
+                    </div>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Input.ConfirmPassword" class="form-label">Confirm password:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input asp-for="Input.ConfirmPassword" type="password" class="form-control" autocomplete="new-password" />
+                    </div>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="text-center mt-3">
+                    <small>
+                        Have an account?
+                        <a asp-area="Identity" asp-page="/Account/Login" class="text-decoration-none link-primary">Login now!</a>
+                    </small>
+                </div>
+                <button id="registerSubmit" type="submit" class="w-100 btn-lg btn-primary mt-3 btn-hover">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -19,19 +19,23 @@ namespace VetShop.Infrastructure.Data.Configuration
             var user1 = new ApplicationUser()
             {
                 Id = "73a08f28-3434-45fe-b44c-90c7cae4916d",
-                UserName = "Guest User",
+                UserName = "Guest",
                 Email = "guest@gmail.com",
                 FirstName = "Guest",
-                LastName = "User"
+                LastName = "User",
+                NormalizedUserName = "GUEST",
+                NormalizedEmail = "GUEST@GMAIL.COM"
             };
             user1.PasswordHash = hasher.HashPassword(user1, "guest123");
             var user2 = new ApplicationUser()
             {
                 Id = "cb2e865b-c700-40b6-af4f-9ed7429ac4bc",
-                UserName = "Guest2 User",
+                UserName = "Veterinary",
                 Email = "veterinary@gmail.com",
                 FirstName = "Veterinary",
-                LastName = "User"
+                LastName = "User",
+                NormalizedEmail = "VETERINARY@GMAIL.COM",
+                NormalizedUserName = "VETERINARY"
             };
             user2.PasswordHash = hasher.HashPassword(user2, "veterinary123");
 
