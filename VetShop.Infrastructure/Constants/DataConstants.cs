@@ -56,7 +56,7 @@ namespace VetShop.Infrastructure.Constants
         }
         public static class AppointmentConstants
         {
-            public const int MinReasonLength = 100;
+            public const int MinReasonLength = 20;
             public const int MaxReasonLength = 500;
         }
         public enum CommentStatus
@@ -68,8 +68,7 @@ namespace VetShop.Infrastructure.Constants
         {
             Pending,
             Sent,
-            Delivered,
-            Cancelled
+            Delivered
         }
         public enum AppointmentStatus
         {
@@ -111,6 +110,15 @@ namespace VetShop.Infrastructure.Constants
             public const string UserFirstNameLegnthMessage = "Length of field first name must be between {2} and {1} characters long!";
             public const string UserLastNameLegnthMessage = "Length of field last name must be between {2} and {1} characters long!";
             public const string UsersUserNameLegnthMessage = "Length of field user name must be between {2} and {1} characters long!";
+
+            public const string CommentTitleRequiredMessage = "Field for Comment title is required!";
+            public const string CommentTitleLengthMessage = "Length of field Comment title must be between {2} and {1} characters long!";
+
+            public const string CommentDescriptionRequiredMessage = "Field for Comment description is required!";
+            public const string CommentDescriptionLengthMessage = "Length of field Comment description must be between {2} and {1} characters long!";
+
+            public const string AppointmentRequiredMessage = "Field for Appointment reason is required!";
+            public const string AppointReasonLengthMessage = "Length of field Appoint reason must be between {2} and {1} characters long!";
         }
     }
 }

@@ -24,6 +24,7 @@ namespace VetShop.Infrastructure.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Veterinary> Veterinaries { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<SavedProduct> SavedProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,6 +52,21 @@ namespace VetShop.Infrastructure.Data
                 .HasOne(a => a.User)
                 .WithMany(x => x.Appointments)
                 .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<SavedProduct>()
+            .HasKey(sp => new { sp.UserId, sp.ProductId });
+
+            modelBuilder.Entity<SavedProduct>()
+                .HasOne(sp => sp.User)
+                .WithMany(u => u.SavedProducts)
+                .HasForeignKey(sp => sp.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<SavedProduct>()
+                .HasOne(sp => sp.Product)
+                .WithMany(p => p.SavedProducts)
+                .HasForeignKey(sp => sp.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.ApplyConfiguration(new BrandConfiguration());

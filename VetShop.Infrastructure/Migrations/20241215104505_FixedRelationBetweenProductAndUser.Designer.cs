@@ -12,15 +12,15 @@ using VetShop.Infrastructure.Data;
 namespace VetShop.Infrastructure.Migrations
 {
     [DbContext(typeof(VetShopDbContext))]
-    [Migration("20241211172906_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20241215104505_FixedRelationBetweenProductAndUser")]
+    partial class FixedRelationBetweenProductAndUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -105,10 +105,12 @@ namespace VetShop.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -145,10 +147,12 @@ namespace VetShop.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -237,33 +241,37 @@ namespace VetShop.Infrastructure.Migrations
                         {
                             Id = "73a08f28-3434-45fe-b44c-90c7cae4916d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "87e644c9-6175-4a20-8d4f-85e38dbdd394",
+                            ConcurrencyStamp = "f8bf2436-9905-49a7-b066-694d751b950d",
                             Email = "guest@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Guest",
                             LastName = "User",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAECKrSzsfTolshHP6NbFU0AALgyNKAqVY+zIusb+Qd7MzUUvFPalhprA/ajWoa/8Zsw==",
+                            NormalizedEmail = "GUEST@GMAIL.COM",
+                            NormalizedUserName = "GUEST",
+                            PasswordHash = "AQAAAAIAAYagAAAAENDZ/hz3y0iNA7wovI23kFZF/umB8FYO+pke2qIOJcDYPStXalLhbINbg9uQNHjGvA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a92392a9-8af7-4461-a15e-93a50a08bea5",
+                            SecurityStamp = "d0cd1aec-6ba5-4570-926c-122fed0ece9b",
                             TwoFactorEnabled = false,
-                            UserName = "Guest User"
+                            UserName = "Guest"
                         },
                         new
                         {
                             Id = "cb2e865b-c700-40b6-af4f-9ed7429ac4bc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "eea998ef-c3b9-4386-b9b3-8f9d1daa2bc4",
+                            ConcurrencyStamp = "1101e6a4-e2e8-477a-9144-6a5dee06ecf8",
                             Email = "veterinary@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Veterinary",
                             LastName = "User",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEJhmgkBPv3r1jaJhgeiuGHyk56xwxyMyP4uF/Ej0UaHa0OsWI5elxhHBtR9nnp4vXQ==",
+                            NormalizedEmail = "VETERINARY@GMAIL.COM",
+                            NormalizedUserName = "VETERINARY",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHqh/IOQRq4AvBvx5HSgsahhMIEAGEv0gbqPPAEW+DmG0rL1urFlWXkyxoxOV0vdmg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0fe7839c-b59e-447f-8b41-83f64855df41",
+                            SecurityStamp = "4f67006e-dfe8-4f59-a3f0-898452fd052e",
                             TwoFactorEnabled = false,
-                            UserName = "Guest2 User"
+                            UserName = "Veterinary"
                         });
                 });
 
@@ -309,7 +317,7 @@ namespace VetShop.Infrastructure.Migrations
                         {
                             Id = 1,
                             AppointmentDate = new DateTime(2024, 12, 5, 10, 30, 0, 0, DateTimeKind.Unspecified),
-                            CreatedOn = new DateTime(2024, 12, 11, 19, 29, 6, 429, DateTimeKind.Local).AddTicks(3614),
+                            CreatedOn = new DateTime(2024, 12, 15, 12, 45, 4, 681, DateTimeKind.Local).AddTicks(135),
                             Reason = "Routine checkup",
                             StatusOfAppointment = 0,
                             UserId = "73a08f28-3434-45fe-b44c-90c7cae4916d",
@@ -507,7 +515,7 @@ namespace VetShop.Infrastructure.Migrations
                     b.Property<string>("AuthorId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -539,7 +547,7 @@ namespace VetShop.Infrastructure.Migrations
                         {
                             Id = 1,
                             AuthorId = "73a08f28-3434-45fe-b44c-90c7cae4916d",
-                            DateTime = new DateTime(2024, 12, 11, 19, 29, 6, 429, DateTimeKind.Local).AddTicks(6291),
+                            CreatedOn = new DateTime(2024, 12, 15, 12, 45, 4, 681, DateTimeKind.Local).AddTicks(531),
                             Description = "This product made wonders for my pet.",
                             ProductId = 1,
                             Status = 1,
@@ -575,14 +583,14 @@ namespace VetShop.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            OrderDate = new DateTime(2024, 12, 11, 19, 29, 6, 428, DateTimeKind.Local).AddTicks(1981),
+                            OrderDate = new DateTime(2024, 12, 15, 12, 45, 4, 680, DateTimeKind.Local).AddTicks(8229),
                             Status = 0,
                             UserId = "73a08f28-3434-45fe-b44c-90c7cae4916d"
                         },
                         new
                         {
                             Id = 2,
-                            OrderDate = new DateTime(2024, 12, 11, 19, 29, 6, 428, DateTimeKind.Local).AddTicks(2033),
+                            OrderDate = new DateTime(2024, 12, 15, 12, 45, 4, 680, DateTimeKind.Local).AddTicks(8275),
                             Status = 2,
                             UserId = "cb2e865b-c700-40b6-af4f-9ed7429ac4bc"
                         });
@@ -844,6 +852,21 @@ namespace VetShop.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("VetShop.Infrastructure.Data.Models.SavedProduct", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("SavedProducts");
+                });
+
             modelBuilder.Entity("VetShop.Infrastructure.Data.Models.Veterinary", b =>
                 {
                     b.Property<int>("Id")
@@ -1017,6 +1040,25 @@ namespace VetShop.Infrastructure.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("VetShop.Infrastructure.Data.Models.SavedProduct", b =>
+                {
+                    b.HasOne("VetShop.Infrastructure.Data.Models.Product", "Product")
+                        .WithMany("SavedProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VetShop.Infrastructure.Data.Models.ApplicationUser", "User")
+                        .WithMany("SavedProducts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("VetShop.Infrastructure.Data.Models.Veterinary", b =>
                 {
                     b.HasOne("VetShop.Infrastructure.Data.Models.ApplicationUser", "User")
@@ -1035,6 +1077,8 @@ namespace VetShop.Infrastructure.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Orders");
+
+                    b.Navigation("SavedProducts");
                 });
 
             modelBuilder.Entity("VetShop.Infrastructure.Data.Models.Brand", b =>
@@ -1055,6 +1099,8 @@ namespace VetShop.Infrastructure.Migrations
             modelBuilder.Entity("VetShop.Infrastructure.Data.Models.Product", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("SavedProducts");
                 });
 
             modelBuilder.Entity("VetShop.Infrastructure.Data.Models.Veterinary", b =>

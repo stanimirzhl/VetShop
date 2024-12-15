@@ -26,7 +26,7 @@ namespace VetShop.Infrastructure.Data.Models
 
         public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
-        public decimal TotalPrice => OrderItems.Sum(x => x.Quantity * x.Product!.Price);
+        public decimal TotalPrice => OrderItems.Sum(x => x.Quantity * (x.Product?.Price ?? 0m));
     }
 
 }

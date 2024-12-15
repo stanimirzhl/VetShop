@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using VetShop.Infrastructure.Data.Models
+@using VetShop.Models.Veterinary
+@model IEnumerable<VeterinaryViewModel>
+@inject SignInManager<ApplicationUser> singInManager
+
+@{
+    @* @if (singInManager.IsSignedIn(User))
+    {
+        <a asp-controller="Veterinary" asp-action="MakeAppointment" asp-route-veterinaryId="@vet.Id" class="btn btn-primary">Make Appointment</a>
+    }
+            else
+    {
+        <a href="@Url.Page("/Account/Login", new { area = "Identity", ReturnUrl = Url.Action("All", "Veterinary") })" class="btn btn-primary">Make Appointment</a>
+    }*@
+}
+<h2>Available Veterinarians</h2>
+
+<div class="row">
+    @foreach (var vet in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@vet.FullName</h5>
+                    <p class="card-text">@vet.Specialty</p>
+                    <p class="card-text">@vet.PhoneNumber</p>
+
+                    <form asp-action="MakeAppointment" method="post">
+                        <input type="hidden" value="@vet.Id" name="veterinaryId" />
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#makeAppointmentModal-@vet.Id">
+                            Make Appointment
+                        </button>
+
+                        <div class="modal fade" id="makeAppointmentModal-@vet.Id" tabindex="-1" aria-labelledby="makeAppointmentModalLabel-@vet.Id" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="makeAppointmentModalLabel-@vet.Id">Make Appointment with @vet.FullName</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label asp-for="@vet.Appointment.AppointmentDate" class="form-label">Appointment Date</label>
+                                            <input type="date" asp-for="@vet.Appointment.AppointmentDate" class="form-control" />
+                                            <span class="text-danger" asp-validation-for="@vet.Appointment.AppointmentDate"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label asp-for="@vet.Appointment.Reason" class="form-label">Reason</label>
+                                            <textarea asp-for="@vet.Appointment.Reason" class="form-control"></textarea>
+                                            <span class="text-danger" asp-validation-for="@vet.Appointment.Reason"></span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Confirm Appointment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

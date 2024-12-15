@@ -15,5 +15,7 @@ namespace VetShop.Infrastructure.Data.Common
         Task<TEntity?> GetByIdAsync(object id);
 
         Task DeleteAsync(object id);
+
+        Task RemoveEntityAsync(TEntity entity);
     }
 }

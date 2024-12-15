@@ -1,0 +1,59 @@
+﻿@using VetShop.Models.Order
+@model OrderViewModel
+
+<h2>Current Order</h2>
+
+@if (Model.OrderItems.Count == 0)
+{
+    <div class="alert alert-info">
+        Your cart is empty. <a asp-controller="Product" asp-action="All">Start shopping now!</a>
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Image</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>
+                        <img src="@item.ImageUrl" alt="@item.ProductName" class="img-thumbnail" style="max-height: 50px;" />
+                    </td>
+                    <td>@item.Quantity</td>
+                    <td>@item.ProductPrice.ToString("C")</td>
+                    <td>@((item.Quantity * item.ProductPrice).ToString("C"))</td>
+                    <td>
+                        <form method="post" asp-action="RemoveItem" asp-controller="Order">
+                            <input type="hidden" name="orderItemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Remove
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-end"><strong>Total Price:</strong></td>
+                <td>@Model.TotalPrice.ToString("C")</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="text-end mt-3">
+        <form method="post" asp-action="CompleteOrder" asp-controller="Order">
+            <button type="submit" class="btn btn-success">Complete Order</button>
+        </form>
+    </div>
+}

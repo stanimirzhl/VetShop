@@ -23,7 +23,7 @@ namespace VetShop.Infrastructure.Data.Models
         [MaxLength(MaxCommentDescription)]
         public string Description { get; set; } = null!;
 
-        public DateTime DateTime { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         [ForeignKey(nameof(Author))]
         public string? AuthorId { get; set; } = null!;

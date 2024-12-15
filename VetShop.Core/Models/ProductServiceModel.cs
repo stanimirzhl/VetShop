@@ -20,5 +20,6 @@ namespace VetShop.Core.Models
         public int Quantity { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive => Quantity > 0;
+        public PagingModel<CommentServiceModel>? Comments { get; set; } 
     }
 }

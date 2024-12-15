@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
@@ -57,5 +58,14 @@ namespace VetShop.Infrastructure.Data.Common
                 dbSet.Remove(entity);
             }
         }
+        public async Task RemoveEntityAsync(TEntity entity)
+        {
+            if(entity != null)
+            {
+                dbSet.Remove(entity);
+            }
+            await this.SaveChangesAsync();
+        }
+
     }
 }

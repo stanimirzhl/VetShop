@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,11 +19,17 @@ namespace VetShop.Core.Implementations
     {
         private readonly IRepository<Product> repository;
         private ILogger<ProductService> logger;
+        private readonly ICommentService commentService;
+        private readonly UserManager<ApplicationUser> userManager;
+        ISavedProductService savedProductService;
 
-        public ProductService(IRepository<Product> repository, ILogger<ProductService> logger)
+        public ProductService(IRepository<Product> repository, ILogger<ProductService> logger, ICommentService commentService, UserManager<ApplicationUser> userManager, ISavedProductService savedProductService)
         {
             this.repository = repository;
             this.logger = logger;
+            this.commentService = commentService;
+            this.userManager = userManager;
+            this.savedProductService = savedProductService;
         }
 
         public async Task<IEnumerable<ProductServiceModel>> GetAllAsync()
@@ -43,6 +51,47 @@ namespace VetShop.Core.Implementations
                 .ToListAsync();
         }
 
+        public async Task<ProductServiceModel?> GetDetailsByIdAsync(int id, int pageIndex, int pageSize)
+        {
+            var product = await repository.All().Include(p => p.Category).Include(p => p.Brand).Include(x => x.Comments).ThenInclude(x => x.Author)
+                .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+
+            if (product == null) throw new NonExistentEntity($"Product with ID {id} not found.");
+
+            if (product.Comments.Count > 0)
+            {
+                return new ProductServiceModel
+                {
+                    Id = product.Id,
+                    Title = product.Title,
+                    Description = product.Description,
+                    Price = product.Price,
+                    ImageUrl = product.ImageUrl,
+                    CategoryId = product.CategoryId,
+                    CategoryName = product.Category.Name,
+                    BrandId = product.BrandId,
+                    BrandName = product.Brand.BrandName,
+                    Quantity = product.Quantity,
+                    IsDeleted = product.IsDeleted,
+                    Comments = await commentService.GetPagedCommentsAsync(id, pageIndex, pageSize)
+                };
+            }
+
+            return new ProductServiceModel
+            {
+                Id = product.Id,
+                Title = product.Title,
+                Description = product.Description,
+                Price = product.Price,
+                ImageUrl = product.ImageUrl,
+                CategoryId = product.CategoryId,
+                CategoryName = product.Category.Name,
+                BrandId = product.BrandId,
+                BrandName = product.Brand.BrandName,
+                Quantity = product.Quantity,
+                IsDeleted = product.IsDeleted,
+            };
+        }
         public async Task<ProductServiceModel?> GetByIdAsync(int id)
         {
             var product = await repository.All().Include(p => p.Category).Include(p => p.Brand)
@@ -145,7 +194,7 @@ namespace VetShop.Core.Implementations
                   Quantity = p.Quantity,
                   IsDeleted = p.IsDeleted
               });
-            
+
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 searchTerm = searchTerm.Trim().ToLower();
@@ -159,6 +208,48 @@ namespace VetShop.Core.Implementations
 
             var pagedProducts = await PagingModel<ProductServiceModel>.CreateAsync(query, pageIndex, pageSize);
             return pagedProducts;
+        }
+        public async Task SaveProductAsync(string userId, int productId)
+        {
+            var product = await repository.GetByIdAsync(productId);
+
+            if (product == null) throw new NonExistentEntity($"Product with ID {productId} not found.");
+
+            await savedProductService.AddSavedProduct(userId, productId);
+        }
+        public async Task RemoveSavedProduct(string userId, int productId)
+        {
+            var product = await repository.GetByIdAsync(productId);
+
+            if (product == null) throw new NonExistentEntity($"Product with ID {productId} not found.");
+
+            await savedProductService.RemoveSavedProduct(userId, productId);
+        }
+        public async Task<PagingModel<ProductServiceModel>> SavedProducts(string userId, string? searchTerm, int pageIndex, int pageSize)
+        {
+            var savedProductsQuery = await savedProductService.GetAllSavedProductsAsync(userId);
+
+            var savedProductDetailsQuery = savedProductsQuery
+                .Join(
+                    repository.All(),
+                    sp => sp.ProductId,
+                    p => p.Id,
+                    (sp, p) => new ProductServiceModel
+                    {
+                        Id = p.Id,
+                        Title = p.Title,
+                        Description = p.Description,
+                        Price = p.Price,
+                        ImageUrl = p.ImageUrl
+                    });
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                searchTerm = searchTerm.Trim().ToLower();
+                savedProductDetailsQuery = savedProductDetailsQuery.Where(p => p.Title.Contains(searchTerm));
+            }
+
+            return await PagingModel<ProductServiceModel>.CreateAsync(savedProductDetailsQuery, pageIndex, pageSize);
         }
     }
 }

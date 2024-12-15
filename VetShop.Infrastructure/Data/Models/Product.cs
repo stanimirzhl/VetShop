@@ -37,12 +37,13 @@ namespace VetShop.Infrastructure.Data.Models
         [ForeignKey(nameof(Brand))]
         public int? BrandId { get; set; }
 
-        public Brand Brand { get; set; } 
+        public Brand Brand { get; set; }
 
         [Required]
         public int Quantity { get; set; } = 0;
 
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<SavedProduct> SavedProducts { get; set; } = new List<SavedProduct>();
 
         public bool IsDeleted { get; set; } = false;
 

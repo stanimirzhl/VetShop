@@ -1,104 +1,244 @@
-﻿@using VetShop.Models.Product
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using VetShop.Infrastructure.Data.Models
+@using VetShop.Models.Product
+@using static VetShop.Infrastructure.Constants.DataConstants
 @{
-    //ViewData["Title"] = $"{Model.Title}";
+    ViewData["Title"] = $"{Model.Product.Title}";
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var user = await userManager.FindByIdAsync(userId);
 }
-@model ProductViewModel
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+@model ProductDetailsViewModel
 
-<div class="card shadow border-0 mt-4">
-    <div class="card-header bg-primary bg-gradient py-3 rounded">
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        <i class="bi bi-check2-circle"></i> @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="card shadow border-0 mt-3 m-3 pb-2 p-3">
+    <div class="card-header bg-primary bg-gradient py-5 rounded">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Product Details: @Model.Title</h2>
+                <h2 class="text-white py-2">Product Details: @Model.Product.Title</h2>
             </div>
         </div>
     </div>
 
-    <div class="card-body p-4">
+    <div class="card-body p-2">
         <div class="row">
             <div class="col-md-4">
-                <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid rounded" />
+                <img src="@Model.Product.ImageUrl" alt="@Model.Product.Title" class="img-fluid rounded" />
             </div>
 
             <div class="col-md-8">
                 <div class="form-group mb-3">
-                    <label><strong>Price:</strong></label>
-                    <p>@Model.Price.ToString("C")</p>
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="me-4">
+                            <label class="fw-bold">Price:</label>
+                            <span class="ms-2">@Model.Product.Price.ToString("C")</span>
+                        </div>
+
+                        <div class="me-4">
+                            <label class="fw-bold">Category:</label>
+                            <span class="ms-2">@Model.Product.CategoryName</span>
+                        </div>
+
+                        <div class="me-4 d-flex align-items-center">
+                            <label class="fw-bold">Brand:</label>
+                            <span class="ms-2">@Model.Product.BrandName</span>
+                            <i class="bi bi-chat-dots ms-3" title="Comments"></i>
+                            <span class="ms-1">
+                                @((Model.Product.Comments != null && Model.Product.Comments.Items != null) ? Model.Product.Comments.Items.Count() : 0)
+                            </span>
+                        </div>
+                        @if (!signInManager.IsSignedIn(User))
+                        {
+                            <a href="@Url.Page("/Account/Login", new { area = "Identity", ReturnUrl = Url.Action("Details", "Product", new { id = Model.Product.Id }) })">
+                                <i class="bi bi-bookmark"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            @if (Model.IsSavedByUser)
+                            {
+                                <form asp-action="RemoveSavedProduct" method="post" class="d-inline ms-3">
+                                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                                    <button type="submit" class="btn">
+                                        <i class="bi bi-bookmark-fill"></i>
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="SaveProduct" method="post" class="d-inline ms-3">
+                                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                                    <button type="submit" class="btn">
+                                        <i class="bi bi-bookmark"></i>
+                                    </button>
+                                </form>
+                            }
+                        }
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label><strong>Quantity:</strong></label>
-                    <p>@Model.Quantity</p>
-                </div>
-                <div class="form-group mb-3">
-                    <label><strong>Category:</strong></label>
-                    <p>@Model.CategoryId</p>
-                </div>
-                <div class="form-group mb-3">
-                    <label><strong>Brand:</strong></label>
-                    <p>@Model.BrandId</p> 
-                </div>
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <form method="post" asp-action="AddToOrder">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="m-2">
+                                    <label for="quantity" class="form-label"><strong>Quantity:</strong></label>
+                                    <select id="quantity" name="quantity" class="form-select form-select-sm" aria-label="Select quantity">
+                                        <option value="1" selected>1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                                <div class="mt-4">
+                                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                                    <button type="submit" class="btn btn-success btn-sm">Add to cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <form method="post" asp-action="AddToOrder">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="m-2">
+                                    <label for="quantity" class="form-label"><strong>Quantity:</strong></label>
+                                    <select id="quantity" name="quantity" class="form-select form-select-sm" aria-label="Select quantity">
+                                        <option value="1" selected>1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="@Url.Page("/Account/Login", new { area = "Identity", ReturnUrl = Url.Action("Details", "Product", new { id = Model.Product.Id }) })" class="btn btn-success btn-sm">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                }
 
                 <div class="form-group mb-3">
                     <label><strong>Description:</strong></label>
                     <div class="product-description">
-                        @Html.Raw(Model.Description)
+                        @Html.Raw(Model.Product.Description)
                     </div>
-                </div>
-
-                <div class="form-group mb-3">
-                    <button class="btn btn-success btn-lg" onclick="addToCart(@Model.Id)">Добави в кошницата</button>
                 </div>
             </div>
         </div>
 
-        <div class="mt-2">
-            @*<h4>Коментари</h4>
-            @if (Model.PagedComments.Any())
+        <div class="mt-auto">
+            <h4>Leave a comment</h4>
+            @if (signInManager.IsSignedIn(User))
             {
-                @foreach (var comment in Model.PagedComments)
-                {
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            @if (comment.Author != null)
-                            {
-                                <p class="card-text"><strong>Автор:</strong> @comment.Author.UserName</p>
-                            }
-                            else
-                            {
-                                <p class="card-text"><strong>Автор:</strong> Изтрит потребител</p>
-                            }
-                            <h6 class="card-subtitle mb-2 text-muted">Публикуван на: @comment.DateTime.ToString("MMMM dd, yyyy", new System.Globalization.CultureInfo("bg-BG"))</h6>
-                            <h6 class="card-text"><strong>@comment.Title</strong></h6>
-                            <p class="card-text">@comment.Content</p>
-                        </div>
+                <form method="post" asp-action="AddComment">
+                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                    <div class="mb-3">
+                        <label asp-for="Comment.Title" class="form-label">Title:</label>
+                        <input type="text" class="form-control" asp-for="Comment.Title" />
+                        <span asp-validation-for="Comment.Title" class="text-danger"></span>
                     </div>
-                }
+                    <div class="mb-3">
+                        <label asp-for="Comment.Description" class="form-label">Description:</label>
+                        <textarea class="form-control" rows="3" asp-for="Comment.Description"></textarea>
+                        <span asp-validation-for="Comment.Description" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post comment</button>
+                </form>
             }
             else
             {
-                <p>Няма коментари.</p>
-            }*@
-        </div>
-
-        <div class="mt-4">
-            <h4>Оставете коментар</h4>
-            <form method="post" action="@Url.Action("AddComment", "Product", new { productId = Model.Id })">
-                <div class="mb-3">
-                    <label for="commentTitle" class="form-label">Заглавие</label>
-                    <input type="text" class="form-control" id="commentTitle" name="Title" required />
-                </div>
-                <div class="mb-3">
-                    <label for="commentContent" class="form-label">Коментар</label>
-                    <textarea class="form-control" id="commentContent" name="Content" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Изпрати коментар</button>
-            </form>
+                <form method="post" asp-action="AddComment">
+                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                    <div class="mb-3">
+                        <label asp-for="Comment.Title" class="form-label">Title:</label>
+                        <input type="text" class="form-control" asp-for="Comment.Title" />
+                        <span asp-validation-for="Comment.Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Comment.Description" class="form-label">Description:</label>
+                        <textarea class="form-control" rows="3" asp-for="Comment.Description"></textarea>
+                        <span asp-validation-for="Comment.Description" class="text-danger"></span>
+                    </div>
+                    <a href="@Url.Page("/Account/Login", new { area = "Identity", ReturnUrl = Url.Action("Details", "Product", new { id = Model.Product.Id }) })" class="btn btn-primary">Login to comment</a>
+                </form>
+            }
         </div>
 
         <div class="col-12 py-3 text-center">
-            <a asp-controller="Products" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary rounded-start">Edit Product</a>
-            <a asp-controller="Products" asp-action="All" class="btn btn-secondary rounded-end">Back to Products</a>
+            <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Product.Id" class="btn btn-primary rounded-start">Edit Product</a>
+            <a asp-controller="Product" asp-action="All" class="btn btn-secondary rounded-end">Back to Products</a>
         </div>
+    </div>
+    <div class="mt-0 m-4">
+        <h4 class="text-center">
+            Comments' section
+        </h4>
+        @if (Model.Product.Comments != null && Model.Product.Comments.Items.Any())
+        {
+            @foreach (var comment in Model.Product.Comments.Items)
+            {
+                <div class="card mb-4 shadow-sm rounded border-light">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="card-text mb-0"><strong>Author:</strong> @comment.AuthorName</p>
+                            <p class="card-text text-muted mb-0">@comment.CreatedOn.ToString("MMMM dd, yyyy")</p>
+                        </div>
+                        <h5 class="card-title text-dark">@comment.Title</h5>
+                        <p class="card-text">@comment.Description</p>
+                    </div>
+                </div>
+            }
+
+            <nav aria-label="Page navigation">
+                @{
+                    var prevDisabled = !Model.Product.Comments.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Product.Comments.HasNextPage ? "disabled" : "";
+                }
+                <div class="d-flex justify-content-center align-items-center my-4">
+                    <a href="@Url.Action("Details", new { id = Model.Product.Id, pageIndex = Model.Product.Comments.PageIndex - 1})" class="btn btn-outline-secondary rounded @prevDisabled" @(prevDisabled) onsubmit="return false">
+                        <i class="bi bi-chevron-left"></i> Previous
+                    </a>
+                    <span class="badge bg-light text-dark fs-6 px-3 py-2 mx-1 rounded-pill" aria-live="polite">
+                        @Model.Product.Comments.PageIndex
+                    </span>
+                    <a href="@Url.Action("Details", new { id = Model.Product.Id, pageIndex = Model.Product.Comments.PageIndex + 1})" class="btn btn-outline-secondary rounded @nextDisabled" @(nextDisabled) onsubmit="return false">
+                        Next <i class="bi bi-chevron-right"></i>
+                    </a>
+                </div>
+            </nav>
+        }
+        else
+        {
+            <p>No comments yet.</p>
+        }
     </div>
 </div>
 
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var textarea = document.getElementById("description");
+
+        textarea.addEventListener("input", function () {
+            this.style.height = "auto";
+            this.style.height = (this.scrollHeight) + "px";
+        });
+    });
+</script>

@@ -1,0 +1,49 @@
+﻿@using VetShop.Models.Order
+@model OrderViewModel
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1>Order Details</h1>
+<div>
+    <strong>Order Date:</strong> @Model.OrderDate.ToString("MM/dd/yyyy")
+</div>
+<div>
+    <strong>Status:</strong> @Model.Status
+</div>
+<div>
+    <strong>Total Price:</strong> @Model.TotalPrice.ToString("C")
+</div>
+
+<h3>Order Items</h3>
+@if (Model.OrderItems.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Image</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td> <img src="@item.ImageUrl" alt="@item.ProductName" style="width: 50px; height: 50px;" /></td>
+                    <td>@item.Quantity</td>
+                    <td>@item.ProductPrice.ToString("C")</td>
+                    <td>@Model.TotalPrice.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No items in this order.</p>
+}

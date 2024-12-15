@@ -131,7 +131,7 @@ namespace VetShop.Areas.Identity.Pages.Account
 
                 if (emailExists)
                 {
-                    ModelState.AddModelError(string.Empty, "There is existing user with that email.");
+                    ModelState.AddModelError(string.Empty, "There is an existing user with that email.");
                     return Page();
                 }
 

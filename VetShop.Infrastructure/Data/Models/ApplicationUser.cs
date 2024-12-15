@@ -24,5 +24,7 @@ namespace VetShop.Infrastructure.Data.Models
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
         public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+
+        public ICollection<SavedProduct> SavedProducts { get; set; } = new List<SavedProduct>();
     }
 }

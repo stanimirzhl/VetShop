@@ -1,0 +1,57 @@
+﻿@using VetShop.Core
+@using VetShop.Models.Comment
+@model PagingModel<CommentViewModel>
+
+<div class="mt-4">
+    <h4>Pending comments</h4>
+    @if (Model.Items.Any())
+    {
+        @foreach (var comment in Model.Items)
+        {
+            <div class="card mb-3 shadow-sm">
+
+                <div class="card-body">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <form asp-action="Approve">
+                            <input hidden name="commentId" value="@comment.Id" />
+                            <button class="btn btn-success btn-sm mt-2" asp-action="Approve" asp-controller="Comment"><i class="bi bi-check-lg"></i></button>
+                        </form>
+                        <form asp-action="Reject">
+                            <input hidden name="commentId" value="@comment.Id" />
+                            <button class="btn btn-danger btn-sm mt-2" asp-action="Reject" asp-controller="Comment"><i class="bi bi-x-lg"></i></button>
+                        </form>
+                    </div>
+                    <p class="card-text">
+                        <strong>Author:</strong> @comment.AuthorName
+                    </p>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Published on: @comment.CreatedOn.ToString("MMMM dd, yyyy")
+                    </h6>
+                    <h6 class="card-text"><strong>@comment.Title</strong></h6>
+
+                    <p class="card-text">@comment.Description</p>
+                </div>
+            </div>
+        }
+        <div class="d-flex justify-content-center align-items-center my-4">
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+            <a asp-action="All" asp-route-pageIndex="@(Model.PageIndex - 1)" class="btn btn-secondary rounded @prevDisabled">
+                <i class="bi bi-chevron-left"></i> Previous
+            </a>
+            <span class="badge bg-secondary fs-6 px-3 py-2 mx-1 rounded-pill" aria-live="polite">
+                @Model.PageIndex
+            </span>
+            <a asp-action="All" asp-route-pageIndex="@(Model.PageIndex + 1)" class="btn btn-secondary rounded @nextDisabled">
+                <i class="bi bi-chevron-right"></i> Next
+            </a>
+        </div>
+    }
+    else
+    {
+        <p>No comments for now.</p>
+    }
+</div>
+

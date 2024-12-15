@@ -1,4 +1,7 @@
-﻿namespace VetShop.Models.Product
+﻿using VetShop.Core;
+using VetShop.Models.Comment;
+
+namespace VetShop.Models.Product
 {
     public class ProductViewModel
     {
@@ -16,5 +19,6 @@
 
         public List<int> SelectedBrandIds { get; set; } = new List<int>();
 
+        public PagingModel<CommentViewModel>? Comments { get; set; }
     }
 }

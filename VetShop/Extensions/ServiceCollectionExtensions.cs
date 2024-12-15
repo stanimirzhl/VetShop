@@ -19,6 +19,12 @@ namespace VetShop.Extensions
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<ISavedProductService, SavedProductService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderItemService, OrderItemService>();
+            services.AddScoped<IVeterinaryService, VeterinaryService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
 
             services.AddMvc(options =>
                 options

@@ -127,8 +127,8 @@ namespace VetShop.Infrastructure.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -172,8 +172,8 @@ namespace VetShop.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -298,7 +298,7 @@ namespace VetShop.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false)
@@ -352,8 +352,8 @@ namespace VetShop.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "73a08f28-3434-45fe-b44c-90c7cae4916d", 0, "87e644c9-6175-4a20-8d4f-85e38dbdd394", "guest@gmail.com", false, "Guest", "User", false, null, null, null, "AQAAAAIAAYagAAAAECKrSzsfTolshHP6NbFU0AALgyNKAqVY+zIusb+Qd7MzUUvFPalhprA/ajWoa/8Zsw==", null, false, "a92392a9-8af7-4461-a15e-93a50a08bea5", false, "Guest User" },
-                    { "cb2e865b-c700-40b6-af4f-9ed7429ac4bc", 0, "eea998ef-c3b9-4386-b9b3-8f9d1daa2bc4", "veterinary@gmail.com", false, "Veterinary", "User", false, null, null, null, "AQAAAAIAAYagAAAAEJhmgkBPv3r1jaJhgeiuGHyk56xwxyMyP4uF/Ej0UaHa0OsWI5elxhHBtR9nnp4vXQ==", null, false, "0fe7839c-b59e-447f-8b41-83f64855df41", false, "Guest2 User" }
+                    { "73a08f28-3434-45fe-b44c-90c7cae4916d", 0, "1bb62100-4696-453f-bf11-334e7a8a37ee", "guest@gmail.com", false, "Guest", "User", false, null, "GUEST@GMAIL.COM", "GUEST", "AQAAAAIAAYagAAAAECkIT/4664Lt8iplM3oBnzKa9aKZ/rRRR7xclwm9zGVMCDx/9PmGW8w2Vk6B9KEx8w==", null, false, "a649985b-0970-415b-8fee-7d9a0500363b", false, "Guest" },
+                    { "cb2e865b-c700-40b6-af4f-9ed7429ac4bc", 0, "16a26bb3-5c29-4a68-9096-34a5b4c66966", "veterinary@gmail.com", false, "Veterinary", "User", false, null, "VETERINARY@GMAIL.COM", "VETERINARY", "AQAAAAIAAYagAAAAEN2DWx/WO+Uy8YfvUBI/Kd+mWrcxUwSKeulieMHVG8SiYBK1kFT8Bsrqh797BxbwRQ==", null, false, "20835a3e-66e3-4fc2-bc4a-0cd56323271a", false, "Veterinary" }
                 });
 
             migrationBuilder.InsertData(
@@ -398,8 +398,8 @@ namespace VetShop.Infrastructure.Migrations
                 columns: new[] { "Id", "OrderDate", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 12, 11, 19, 29, 6, 428, DateTimeKind.Local).AddTicks(1981), 0, "73a08f28-3434-45fe-b44c-90c7cae4916d" },
-                    { 2, new DateTime(2024, 12, 11, 19, 29, 6, 428, DateTimeKind.Local).AddTicks(2033), 2, "cb2e865b-c700-40b6-af4f-9ed7429ac4bc" }
+                    { 1, new DateTime(2024, 12, 14, 14, 54, 4, 470, DateTimeKind.Local).AddTicks(4566), 0, "73a08f28-3434-45fe-b44c-90c7cae4916d" },
+                    { 2, new DateTime(2024, 12, 14, 14, 54, 4, 470, DateTimeKind.Local).AddTicks(4620), 2, "cb2e865b-c700-40b6-af4f-9ed7429ac4bc" }
                 });
 
             migrationBuilder.InsertData(
@@ -429,12 +429,12 @@ namespace VetShop.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Appointments",
                 columns: new[] { "Id", "AppointmentDate", "CreatedOn", "Reason", "StatusOfAppointment", "UserId", "VeterinaryId" },
-                values: new object[] { 1, new DateTime(2024, 12, 5, 10, 30, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 12, 11, 19, 29, 6, 429, DateTimeKind.Local).AddTicks(3614), "Routine checkup", 0, "73a08f28-3434-45fe-b44c-90c7cae4916d", 1 });
+                values: new object[] { 1, new DateTime(2024, 12, 5, 10, 30, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 12, 14, 14, 54, 4, 470, DateTimeKind.Local).AddTicks(7086), "Routine checkup", 0, "73a08f28-3434-45fe-b44c-90c7cae4916d", 1 });
 
             migrationBuilder.InsertData(
                 table: "Comments",
-                columns: new[] { "Id", "AuthorId", "DateTime", "Description", "ProductId", "Status", "Title" },
-                values: new object[] { 1, "73a08f28-3434-45fe-b44c-90c7cae4916d", new DateTime(2024, 12, 11, 19, 29, 6, 429, DateTimeKind.Local).AddTicks(6291), "This product made wonders for my pet.", 1, 1, "Great product!" });
+                columns: new[] { "Id", "AuthorId", "CreatedOn", "Description", "ProductId", "Status", "Title" },
+                values: new object[] { 1, "73a08f28-3434-45fe-b44c-90c7cae4916d", new DateTime(2024, 12, 14, 14, 54, 4, 470, DateTimeKind.Local).AddTicks(7585), "This product made wonders for my pet.", 1, 1, "Great product!" });
 
             migrationBuilder.InsertData(
                 table: "OrderItems",

@@ -24,6 +24,6 @@ namespace VetShop.Infrastructure.Data.Models
 
         public Product? Product { get; set; }
 
-        public int Quantity { get; set; } 
+        public int Quantity { get; set; } = 0;
     }
 }
