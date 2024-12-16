@@ -119,6 +119,7 @@ namespace VetShop.Infrastructure.Constants
 
             public const string AppointmentRequiredMessage = "Field for Appointment reason is required!";
             public const string AppointReasonLengthMessage = "Length of field Appoint reason must be between {2} and {1} characters long!";
+            public const string AppointmentDateRequiredMessage = "Field for Appointment Date is required!";
         }
     }
 }

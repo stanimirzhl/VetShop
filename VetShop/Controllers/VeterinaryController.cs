@@ -36,6 +36,7 @@ namespace VetShop.Controllers
                 PhoneNumber = x.PhoneNumber,
                 Specialty = x.Specialty,
                 UserId = x.UserId,
+                Appointment = new AppointmentFormView()
             });
 
             return View(mappedVeterinaries);
@@ -43,21 +44,25 @@ namespace VetShop.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> MakeAppointment(int veterinaryId, VeterinaryViewModel model)
+        public async Task<IActionResult> MakeAppointment(int veterinaryId, AppointmentFormView model)
         {
             if (!ModelState.IsValid)
             {
                 return RedirectToAction("All");
             }
-
+            if (!DateTime.TryParse(model.AppointmentDate, out DateTime addedOn))
+            {
+                ModelState.AddModelError(nameof(model.AppointmentDate), "Invalid date format.");
+                model.AppointmentDate = string.Empty;
+            }
             var appointment = new AppointmentServiceModel()
             {
-                AppointmentDate = model.Appointment.AppointmentDate,
-                Reason = model.Appointment.Reason,
-                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                VeterinaryId = veterinaryId
+                 AppointmentDate = addedOn,
+                 Reason = model.Reason,
+                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                 VeterinaryId = veterinaryId
             };
-            
+            TempData["SuccessMessage"] = "Appointment successfully made!";
             await appointmentService.CreateAppointmentAsync(appointment);
 
             return RedirectToAction("All");

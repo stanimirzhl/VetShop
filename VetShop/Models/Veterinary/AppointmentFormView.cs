@@ -8,16 +8,16 @@ namespace VetShop.Models.Veterinary
 {
     public class AppointmentFormView
     {
-        [Required(ErrorMessage = AppointmentRequiredMessage)]
-        public DateTime AppointmentDate { get; set; }
+        [Required(ErrorMessage = AppointmentDateRequiredMessage)]
+        public string AppointmentDate { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = AppointmentRequiredMessage)]
         [StringLength(MaxReasonLength, MinimumLength = MinReasonLength, ErrorMessage = AppointReasonLengthMessage)]
         public string Reason { get; set; } = null!;
 
         public int VeterinaryId { get; set; }
 
-        public string UserId { get; set; } = null!;
+        public string? UserId { get; set; }
 
     }
 }

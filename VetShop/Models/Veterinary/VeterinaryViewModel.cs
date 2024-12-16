@@ -8,6 +8,6 @@
         public string UserId { get; set; } = null!;
         public string FullName { get; set; } = null!;
 
-        public AppointmentFormView Appointment { get; set; }
+        public AppointmentFormView Appointment { get; set; } = new AppointmentFormView();
     }
 }
