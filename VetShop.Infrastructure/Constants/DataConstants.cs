@@ -29,7 +29,7 @@ namespace VetShop.Infrastructure.Constants
         }
         public static class ProductConstants
         {
-            public const int MinProductTitle = 25;
+            public const int MinProductTitle = 15;
             public const int MaxProductTitle = 100;
 
             public const int MinProductDescription = 100;
@@ -51,12 +51,12 @@ namespace VetShop.Infrastructure.Constants
         }
         public static class VeterinaryConstants
         {
-            public const int MinSpecialtyLength = 50;
+            public const int MinSpecialtyLength = 15;
             public const int MaxSpecialtyLength = 70;
         }
         public static class AppointmentConstants
         {
-            public const int MinReasonLength = 20;
+            public const int MinReasonLength = 15;
             public const int MaxReasonLength = 500;
         }
         public enum CommentStatus
@@ -118,6 +118,12 @@ namespace VetShop.Infrastructure.Constants
             public const string AppointmentRequiredMessage = "Field for Appointment reason is required!";
             public const string AppointReasonLengthMessage = "Length of field Appoint reason must be between {2} and {1} characters long!";
             public const string AppointmentDateRequiredMessage = "Field for Appointment Date is required!";
+
+            public const string VeterinaryPhoneNumberMessage = "Field for Veterinary Phone Number is required!";
+            public const string VeterinarySpecialtyMessage = "Field for Veterinary Specialty is required!";
+            public const string VeterinaryAddressMessage = "Field for Veterinary Address is required!";
+            public const string VeterinarySpecialtyLengthMessage = "Length of field Veterinary Specialty must be between {2} and {1} characters long!";
+            public const string VeterinaryPhoneNumberErrorMessage = "Field for Veterinary Phone Number is not in the correct format!";
         }
     }
 }

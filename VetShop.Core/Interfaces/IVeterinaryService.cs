@@ -13,5 +13,7 @@ namespace VetShop.Core.Interfaces
         Task<IEnumerable<VeterinaryServiceModel>> GetAllVeterinariansAsync();
         Task<VeterinaryServiceModel?> GetVeterinarianByIdAsync(int id);
         Task<bool> IsVeterinary(string userId);
+        Task BecomeVeterinaryAsync(string userId, string phoneNumber, string specialty, string address);
+        Task<bool> UserWithPhoneNumberExists(string phoneNumber);
     }
 }

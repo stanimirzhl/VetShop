@@ -24,7 +24,8 @@ namespace VetShop.Infrastructure.Data.Configuration
                     Id = 1,
                     PhoneNumber = "987-654-3210",
                     Specialty = "Dermatology",
-                    UserId = "cb2e865b-c700-40b6-af4f-9ed7429ac4bc"
+                    UserId = "cb2e865b-c700-40b6-af4f-9ed7429ac4bc",
+                    Address = "24 Kapitan Dimitar Spisarevski"
                 }
             );
         }

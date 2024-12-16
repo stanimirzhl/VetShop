@@ -12,6 +12,10 @@ namespace VetShop.Models.Veterinary
 
         public string Reason { get; set; } = null!;
 
+        public string PhoneNumber { get; set; }
+
+        public string? UsersName { get; set; }
+
         public AppointmentStatus AppointmentStatus { get; set; }
     }
 }

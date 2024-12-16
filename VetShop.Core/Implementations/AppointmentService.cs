@@ -69,6 +69,7 @@ namespace VetShop.Core.Implementations
             {
                 appointments = repository.All()
                     .Where(a => a.Veterinary.UserId == userId)
+                    .Include(a => a.User)
                     .Include(a => a.Veterinary)
                     .ThenInclude(v => v.User);
             }
@@ -76,6 +77,7 @@ namespace VetShop.Core.Implementations
             {
                 appointments = repository.All()
                     .Where(a => a.UserId == userId)
+                    .Include(a => a.User)
                     .Include(a => a.Veterinary)
                     .ThenInclude(v => v.User);
             }
@@ -86,7 +88,9 @@ namespace VetShop.Core.Implementations
                 Id = x.Id,
                 Reason = x.Reason,
                 VeterinaryName = x.Veterinary.User.FirstName + " " + x.Veterinary.User.LastName,
-                AppointmentStatus = x.StatusOfAppointment
+                AppointmentStatus = x.StatusOfAppointment,
+                PhoneNumber = x.Veterinary.PhoneNumber,
+                UsersName = x.User.FirstName + " " + x.Veterinary.User.LastName
             });
 
             return mappedAppointments;

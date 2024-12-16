@@ -43,6 +43,7 @@ namespace VetShop.Controllers
 
                 var model = new BrandDetailsViewModel
                 {
+                    Id = brand.Id,
                     BrandName = brand.Name,
                     ImageUrl = brand.ImageUrl
                 };

@@ -46,7 +46,17 @@
                                 }
                             </div>
                         }
-                        <h5 class="card-title">Appointment with @appointment.VeterinaryName</h5>
+                        @if (!Model.IsVeterinary)
+                        {
+                            <h5 class="card-title">Appointment with @appointment.VeterinaryName</h5>
+                        }
+                        else
+                        {
+                            <h5 class="card-title">Appointment with @appointment.UsersName</h5>
+                        }
+                        <p class="card-text">
+                            <strong>PhoneNumber:</strong> @appointment.PhoneNumber
+                        </p>
                         <p class="card-text">
                             <strong>Date:</strong> @appointment.AppointmentDate.ToString("f")
                         </p>

@@ -29,6 +29,9 @@ namespace VetShop.Infrastructure.Data.Models
 
         public ApplicationUser User { get; set; } = null!;
 
+        [Required]
+        public string Address { get; set; } = null!;
+
         public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
     }
 

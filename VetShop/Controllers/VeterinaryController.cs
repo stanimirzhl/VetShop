@@ -59,10 +59,10 @@ namespace VetShop.Controllers
             }
             var appointment = new AppointmentServiceModel()
             {
-                 AppointmentDate = addedOn,
-                 Reason = model.Reason,
-                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                 VeterinaryId = veterinaryId
+                AppointmentDate = addedOn,
+                Reason = model.Reason,
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                VeterinaryId = veterinaryId
             };
             TempData["SuccessMessage"] = "Appointment successfully made!";
             await appointmentService.CreateAppointmentAsync(appointment);
@@ -86,7 +86,9 @@ namespace VetShop.Controllers
                 AppointmentDate = x.AppointmentDate,
                 VeterinaryName = x.VeterinaryName,
                 Reason = x.Reason,
-                AppointmentStatus = x.AppointmentStatus 
+                AppointmentStatus = x.AppointmentStatus,
+                PhoneNumber = x.PhoneNumber,
+                UsersName = x.UsersName,
             });
 
             var details = new AppointmentsDetailsViewModel()
@@ -126,6 +128,39 @@ namespace VetShop.Controllers
             }
 
             return RedirectToAction("MyAppointments");
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> BecomeVeterinary()
+        {
+            return View(new VeterinaryFormModel());
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> BecomeVeterinary(VeterinaryFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("BecomeVeterinary", model);
+            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (await veterinaryService.IsVeterinary(userId))
+            {
+                TempData["UserExists"] = "You are already a veterinary.";
+                return RedirectToAction("BecomeVeterinary");
+            }
+
+            if(await veterinaryService.UserWithPhoneNumberExists(model.PhoneNumber))
+            {
+                TempData["PhoneExists"] = "There is already existing vet with such number, please try different one.";
+                return RedirectToAction("BecomeVeterinary");
+            }
+
+            await veterinaryService.BecomeVeterinaryAsync(userId, model.PhoneNumber, model.Specialty, model.Address);
+
+            TempData["SuccessMessage"] = "Successfully sent form to become a veterinary.";
+            return RedirectToAction("Index");
         }
     }
 }

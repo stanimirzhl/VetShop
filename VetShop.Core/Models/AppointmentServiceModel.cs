@@ -19,7 +19,11 @@ namespace VetShop.Core.Models
 
         public int Id { get; set; }
 
+        public string PhoneNumber { get; set; } = null!;
+
         public string VeterinaryName { get; set; } = null!;
+
+        public string? UsersName { get; set; }
 
         public AppointmentStatus AppointmentStatus { get; set; }
     }

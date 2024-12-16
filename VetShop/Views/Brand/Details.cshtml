@@ -21,7 +21,7 @@
     </div>
 
     <div class="mt-4 text-center">
-        <a asp-action="Edit" asp-controller="Brand" class="btn btn-primary me-2">Edit Brand</a>
+        <a asp-controller="Brand" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-2">Edit Brand</a>
         <a asp-action="All" asp-controller="Brand" class="btn btn-secondary">Back to All</a>
     </div>
 </div>

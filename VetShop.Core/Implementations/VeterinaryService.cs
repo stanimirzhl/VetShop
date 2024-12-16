@@ -23,6 +23,19 @@ namespace VetShop.Core.Implementations
             this.logger = logger;
         }
 
+        public async Task BecomeVeterinaryAsync(string userId, string phoneNumber, string specialty, string address)
+        {
+            var veterinary = new Veterinary
+            {
+                UserId = userId,
+                PhoneNumber = phoneNumber,
+                Specialty = specialty,
+                Address = address
+            };
+
+            await repository.AddAsync(veterinary);
+        }
+
         public async Task<IEnumerable<VeterinaryServiceModel>> GetAllVeterinariansAsync()
         {
             var veterinaries = await repository.All().Include(x => x.User).ToListAsync();
@@ -34,6 +47,7 @@ namespace VetShop.Core.Implementations
                 FullName = x.User.FirstName + " " + x.User.LastName,
                 Specialty = x.Specialty,
                 UserId = x.UserId,
+                Address = x.Address,
             });
 
             return mappedVeterinaries;
@@ -45,7 +59,13 @@ namespace VetShop.Core.Implementations
 
         public async Task<bool> IsVeterinary(string userId)
         {
-            return  await repository.All().AnyAsync(v => v.UserId == userId);
+            return await repository.All().AnyAsync(v => v.UserId == userId);
+        }
+
+        public async Task<bool> UserWithPhoneNumberExists(string phoneNumber)
+        {
+            return await repository.All()
+                .AnyAsync(a => a.PhoneNumber == phoneNumber);
         }
     }
 }
