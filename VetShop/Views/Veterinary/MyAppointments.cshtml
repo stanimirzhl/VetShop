@@ -1,0 +1,73 @@
+﻿@using VetShop.Models.Veterinary
+@model AppointmentsDetailsViewModel
+@using static VetShop.Infrastructure.Constants.DataConstants.AppointmentStatus
+
+@{
+    ViewData["Title"] = "My appointments";
+}
+
+<h2>Your Appointments</h2>
+
+<div class="row">
+    @if (!Model.Appointments.Any())
+    {
+        <div class="col-12 text-center">
+            <p>No appointments found.</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var appointment in Model.Appointments)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        @if (Model.IsVeterinary)
+                        {
+                            <div class="d-flex justify-content-end">
+                                @if (appointment.AppointmentStatus == Pending)
+                                {
+                                    <div class="btn-group">
+                                        <form method="post" asp-action="AcceptAppointment">
+                                            <input type="hidden" value="@appointment.Id" name="id"/>
+                                            <button class="btn btn-outline-success btn-sm">
+                                                Accept
+                                            </button>
+                                        </form>
+                                        <form method="post" asp-action="CancelAppointment">
+                                            <input type="hidden" value="@appointment.Id" name="id"/>
+                                            <button class="btn btn-outline-danger btn-sm">
+                                                Cancel
+                                            </button>
+                                        </form>
+
+                                        
+                                    </div>
+                                }
+                            </div>
+                        }
+                        <h5 class="card-title">Appointment with @appointment.VeterinaryName</h5>
+                        <p class="card-text">
+                            <strong>Date:</strong> @appointment.AppointmentDate.ToString("f")
+                        </p>
+                        <p class="card-text">
+                            <strong>Status:</strong> @appointment.AppointmentStatus
+                        </p>
+                        <p>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample-@appointment.Id" aria-expanded="true" aria-controls="collapseWidthExample-@appointment.Id">
+                                Show reason
+                            </button>
+                        </p>
+                        <div style="min-height: 120px;">
+                            <div class="collapse collapse-horizontal" id="collapseWidthExample-@appointment.Id">
+                                <div class="card card-body" style="width: 300px;">
+                                    @appointment.Reason
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

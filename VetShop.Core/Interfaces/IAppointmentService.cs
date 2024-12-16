@@ -13,6 +13,7 @@ namespace VetShop.Core.Interfaces
         Task CreateAppointmentAsync(AppointmentServiceModel appointmentModel);
         Task<AppointmentServiceModel> GetAppointmentByIdAsync(int id);
         Task<IEnumerable<AppointmentServiceModel>> GetAppointmentsByUserIdAsync(string userId);
-        Task<IEnumerable<AppointmentServiceModel>> GetAppointmentsByVeterinaryIdAsync(int veterinaryId);
+        Task AcceptAppointment(int id);
+        Task CancelAppointment(int id);
     }
 }

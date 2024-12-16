@@ -21,6 +21,12 @@
         <i class="bi bi-check2-circle"></i> @TempData["SuccessMessage"]
     </div>
 }
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-success">
+        <i class="bi bi-check2-circle"></i> @TempData["ErrorMessage"]
+    </div>
+}
 <div class="row">
     @foreach (var vet in Model)
     {

@@ -38,12 +38,14 @@ namespace VetShop.Core.Implementations
 
             return mappedVeterinaries;
         }
-
-
-
         public Task<VeterinaryServiceModel?> GetVeterinarianByIdAsync(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> IsVeterinary(string userId)
+        {
+            return  await repository.All().AnyAsync(v => v.UserId == userId);
         }
     }
 }

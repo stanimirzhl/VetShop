@@ -24,7 +24,7 @@ namespace VetShop.Infrastructure.Data.Models
         public string Reason { get; set; } = null!;
 
         [ForeignKey(nameof(Veterinary))]
-        public int? VeterinaryId { get; set; }
+        public int VeterinaryId { get; set; }
 
         public Veterinary? Veterinary { get; set; }
 

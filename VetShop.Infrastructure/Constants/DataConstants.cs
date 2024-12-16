@@ -74,9 +74,7 @@ namespace VetShop.Infrastructure.Constants
         {
             Pending,
             Confirmed,
-            Waiting,
-            Cancelled,
-            Completed
+            Cancelled
         }
         public static class ExceptionMessagesConstants
         {
